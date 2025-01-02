@@ -7,7 +7,7 @@ import {
   ExclamationCircleIcon,
 } from "@heroicons/react/24/outline";
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
-import { Button } from "./button";
+import { Button } from "@/app/ui/admin/button";
 import { useFormState, useFormStatus } from "react-dom";
 import { register, authenticate } from "@/app/utils/actions";
 
