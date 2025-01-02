@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 
 export async function setCookiesToken(token: string) {
-  cookies().set({
+  (await cookies()).set({
     name: "token",
     value: token,
     httpOnly: true,
@@ -14,17 +14,17 @@ export async function setCookiesToken(token: string) {
 }
 
 export async function getCookiesToken() {
-  const token = cookies().get("token");
+  const token = (await cookies()).get("token");
   console.log(token?.value, "tokenapapa");
   return token;
 }
 
 export async function getAllCookies() {
-  const token = cookies().getAll();
+  const token = (await cookies()).getAll();
   console.log(token, "tokenapapa");
   return token;
 }
 
 export async function removeCookiesToken() {
-  cookies().delete("token");
+  (await cookies()).delete("token");
 }
