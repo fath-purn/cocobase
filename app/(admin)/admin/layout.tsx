@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { poppins } from "@/app/ui/fonts";
 import "../../globals.css";
 import SideNav from "@/app/ui/admin/sidenav";
-import TopBar from "@/app/ui/panel/topbar";
+import TopBar from "@/app/ui/admin/topBar";
 
 export const metadata: Metadata = {
   title: {
