@@ -5,13 +5,8 @@ import Table from "@/app/ui/admin/produksi/tabel";
 import { useState } from "react";
 import Pagination from "@/app/ui/pagination";
 import { Produksi } from "@/app/utils/interface";
-import { useSearchParams } from "next/navigation";
 
 export default function Page() {
-  // const searchParams = useSearchParams();
-  // const search = searchParams.get('search');
-  // const page = searchParams.get('page');
-  // const limit = searchParams.get('limit');
   const [totalPages, setTotalPages] = useState(3);
 
   const [produksiList, setProduksiList] = useState<Produksi[]>([

@@ -4,13 +4,8 @@ import Link from "next/link";
 import Table from "@/app/ui/admin/petani/tabel";
 import { Petani } from "@/app/utils/interface";
 import Pagination from "@/app/ui/pagination";
-// import { useSearchParams } from "next/navigation";
 
 export default function Page() {
-  // const searchParams = useSearchParams();
-  // const search = searchParams.get('search');
-  // const page = searchParams.get('page');
-  // const limit = searchParams.get('limit');
   const [totalPages, setTotalPages] = useState(3);
 
   const [petaniList, setPetaniList] = useState<Petani[]>([

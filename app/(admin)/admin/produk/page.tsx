@@ -5,13 +5,8 @@ import { useState } from "react";
 import Pagination from "@/app/ui/pagination";
 import { Produk } from "@/app/utils/interface";
 import Card from "@/app/ui/admin/produk/card";
-import { useSearchParams } from "next/navigation";
 
 export default function Page() {
-  // const searchParams = useSearchParams();
-  // const search = searchParams.get('search');
-  // const page = searchParams.get('page');
-  // const limit = searchParams.get('limit');
   const [totalPages, setTotalPages] = useState(3);
 
   const [dataProduk, setDataProduk] = useState<Produk[]>([
