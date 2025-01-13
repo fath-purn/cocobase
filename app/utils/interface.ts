@@ -1,9 +1,7 @@
 export interface SearchParams {
-  searchParams?: {
-    limit?: number;
-    page?: string;
-    search?: string;
-  };
+  limit?: number;
+  page?: string;
+  search?: string;
 }
 
 export interface Produksi {
@@ -24,4 +22,12 @@ export interface Petani {
     total: number;
     status: string;
   };
+}
+
+export interface Produk {
+  id: number;
+  nama: string;
+  gambar: string;
+  link: string;
+  deskripsi: string;
 }

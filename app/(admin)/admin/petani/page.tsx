@@ -6,7 +6,16 @@ import { Petani } from "@/app/utils/interface";
 import { SearchParams } from "@/app/utils/interface";
 import Pagination from "@/app/ui/pagination";
 
-export default function Page({ searchParams }: { searchParams: SearchParams }) {
+export default async function Page(props: {
+  searchParams?: Promise<{
+    query?: string;
+    page?: string;
+  }>;
+}) {
+  const searchParams = await props.searchParams;
+  const query = searchParams?.query || '';
+  const currentPage = Number(searchParams?.page) || 1;
+  
   const [petaniList, setPetaniList] = useState<Petani[]>([
     {
       id: 1,

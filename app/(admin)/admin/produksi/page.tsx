@@ -6,7 +6,16 @@ import { useState } from "react";
 import Pagination from "@/app/ui/pagination";
 import { Produksi, SearchParams } from "@/app/utils/interface";
 
-export default function Page({ searchParams }: { searchParams: SearchParams }) {
+export default async function Page(props: {
+  searchParams?: Promise<{
+    query?: string;
+    page?: string;
+  }>;
+}) {
+  const searchParams = await props.searchParams;
+  const query = searchParams?.query || '';
+  const currentPage = Number(searchParams?.page) || 1;
+
   const [produksiList, setProduksiList] = useState<Produksi[]>([
     {
       id: 1,
