@@ -2,12 +2,10 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import Pagination from "@/app/ui/pagination";
 import { Produk } from "@/app/utils/interface";
 import Card from "@/app/ui/admin/produk/card";
 
 export default function Page() {
-  const [totalPages, setTotalPages] = useState(3);
 
   const [dataProduk, setDataProduk] = useState<Produk[]>([
     {
@@ -77,12 +75,6 @@ export default function Page() {
       {/* Produk */}
       <Card dataProduk={dataProduk} />
 
-      {/* pagination */}
-      {/* {pagination && ( */}
-      <div className="flex flex-row justify-center items-center mt-10">
-        <Pagination totalPages={totalPages} />
-      </div>
-      {/* )} */}
     </div>
   );
 }

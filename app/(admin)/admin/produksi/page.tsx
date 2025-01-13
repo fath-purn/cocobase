@@ -3,12 +3,9 @@
 import Link from "next/link";
 import Table from "@/app/ui/admin/produksi/tabel";
 import { useState } from "react";
-import Pagination from "@/app/ui/pagination";
 import { Produksi } from "@/app/utils/interface";
 
 export default function Page() {
-  const [totalPages, setTotalPages] = useState(3);
-
   const [produksiList, setProduksiList] = useState<Produksi[]>([
     {
       id: 1,
@@ -67,7 +64,6 @@ export default function Page() {
       status: "Selesai",
     },
   ]);
-  
 
   return (
     <div className="mr-5 p-10 md:mr-8 bg-white rounded-lg mb-5 md:mb-8 shadow-lg">
@@ -86,12 +82,6 @@ export default function Page() {
       {/* Tabel */}
       <Table produksiList={produksiList} />
 
-      {/* pagination */}
-      {/* {pagination && ( */}
-      <div className="flex flex-row justify-center items-center mt-10">
-        <Pagination totalPages={totalPages} />
-      </div>
-      {/* )} */}
     </div>
   );
 }

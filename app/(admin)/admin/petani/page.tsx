@@ -3,11 +3,8 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Table from "@/app/ui/admin/petani/tabel";
 import { Petani } from "@/app/utils/interface";
-import Pagination from "@/app/ui/pagination";
 
 export default function Page() {
-  const [totalPages, setTotalPages] = useState(3);
-
   const [petaniList, setPetaniList] = useState<Petani[]>([
     {
       id: 1,
@@ -61,12 +58,6 @@ export default function Page() {
       </div>
       <Table petaniList={petaniList} />
 
-      {/* pagination */}
-      {/* {pagination && ( */}
-      <div className="flex flex-row justify-center items-center mt-10">
-        <Pagination totalPages={totalPages} />
-      </div>
-      {/* )} */}
     </div>
   );
 }
