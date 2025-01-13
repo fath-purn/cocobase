@@ -1,16 +1,16 @@
 "use client";
-import React, { useState, Suspense } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Table from "@/app/ui/admin/petani/tabel";
 import { Petani } from "@/app/utils/interface";
 import Pagination from "@/app/ui/pagination";
-import { useSearchParams } from "next/navigation";
+// import { useSearchParams } from "next/navigation";
 
 export default function Page() {
-  const searchParams = useSearchParams();
-  const search = searchParams.get("search");
-  const page = searchParams.get("page");
-  const limit = searchParams.get("limit");
+  // const searchParams = useSearchParams();
+  // const search = searchParams.get('search');
+  // const page = searchParams.get('page');
+  // const limit = searchParams.get('limit');
   const [totalPages, setTotalPages] = useState(3);
 
   const [petaniList, setPetaniList] = useState<Petani[]>([
@@ -49,30 +49,29 @@ export default function Page() {
       },
     },
   ]);
+  
 
   return (
-    <Suspense>
-      <div className="mr-5 p-10 md:mr-8 bg-white rounded-lg shadow-lg">
-        <div className="flex justify-between items-center mb-4">
-          <h1 className="text-3xl font-bold mb-4">Daftar Petani</h1>
-          <Link
-            href={"/admin/petani/add"}
-            className="flex h-10 items-center rounded-lg bg-blue-600 px-4 text-sm font-medium text-white transition-colors hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-          >
-            <p className="flex items-center">
-              <span className="font-bold text-xl mr-1">+</span> Tambah Petani
-            </p>
-          </Link>
-        </div>
-        <Table petaniList={petaniList} />
-
-        {/* pagination */}
-        {/* {pagination && ( */}
-        <div className="flex flex-row justify-center items-center mt-10">
-          <Pagination totalPages={totalPages} />
-        </div>
-        {/* )} */}
+    <div className="mr-5 p-10 md:mr-8 bg-white rounded-lg shadow-lg">
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-3xl font-bold mb-4">Daftar Petani</h1>
+        <Link
+          href={"/admin/petani/add"}
+          className="flex h-10 items-center rounded-lg bg-blue-600 px-4 text-sm font-medium text-white transition-colors hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+        >
+          <p className="flex items-center">
+            <span className="font-bold text-xl mr-1">+</span> Tambah Petani
+          </p>
+        </Link>
       </div>
-    </Suspense>
+      <Table petaniList={petaniList} />
+
+      {/* pagination */}
+      {/* {pagination && ( */}
+      <div className="flex flex-row justify-center items-center mt-10">
+        <Pagination totalPages={totalPages} />
+      </div>
+      {/* )} */}
+    </div>
   );
 }
