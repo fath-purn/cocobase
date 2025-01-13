@@ -9,6 +9,7 @@ import {
   mdiFormatListBulleted,
   mdiViewDashboardOutline,
   mdiStoreOutline,
+  mdiCogs,
 } from "@mdi/js";
 
 // Map of links to display in the side navigation.
@@ -19,14 +20,19 @@ const links = [
     icon: mdiViewDashboardOutline 
   },
   {
-    name: "Produk",
-    href: "/admin/produk",
-    icon: mdiStoreOutline,
+    name: "Produksi",
+    href: "/admin/produksi",
+    icon: mdiCogs,
   },
   {
     name: "Cocoblog",
     href: "/admin/cocoblog",
     icon: mdiPostOutline,
+  },
+  {
+    name: "Produk",
+    href: "/admin/produk",
+    icon: mdiStoreOutline,
   },
   { name: "Pesanan", 
     href: "/admin/pesanan", 
@@ -48,8 +54,11 @@ export default function NavLinks() {
               "flex h-[48px] md:w-[95%] md:mt-3 grow items-center justify-center gap-2 rounded-md  p-3 text-sm font-medium hover:bg-[#00B69B] hover:text-white md:flex-none md:justify-start md:p-2 md:px-3",
               {
                 "bg-[#00B69B] text-white": pathname === link.href,
+                "bg-[#00B69A] text-white": pathname === `${link.href}/add` ,
+                "bg-[#20B69C] text-white": pathname === `${link.href}/edit` ,
                 "bg-white text-[#202224]": pathname !== link.href,
-              }
+              },
+              
             )}
           >
             <Icon path={String(link.icon)} size={1.2} className="w-6" />

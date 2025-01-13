@@ -1,6 +1,6 @@
 import { PencilIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import {formDeleteHandler} from "@/app/utils/actions";
+import { formDeleteHandler } from "@/app/utils/actions";
 
 export function CreateInvoice({tambah, link}: {tambah: string, link: string}) {
   return (

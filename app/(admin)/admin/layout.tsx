@@ -42,3 +42,32 @@ export default function RootLayout({
     </html>
   );
 }
+// export default function RootLayout({
+//   children,
+// }: {
+//   children: React.ReactNode;
+// }) {
+//   return (
+//     <html lang="en">
+//       <body className={`${poppins.className}`}>
+//         <div className="flex h-screen bg-[#F2F2F2] flex-col md:flex-row md:overflow-hidden">
+//           {/* SideNav */}
+//           <div className="w-full flex-none md:w-64">
+//             <SideNav />
+//           </div>
+//           {/* Area Konten */}
+//           <div className="flex-grow flex flex-col md:overflow-y-auto relative">
+//             {/* TopBar dengan position: fixed, tetapi hanya di area konten */}
+//             <div className="fixed top-0 left-64 right-0 z-50">
+//               <TopBar />
+//             </div>
+//             {/* Konten children dengan padding untuk menghindari tumpang tindih dengan TopBar */}
+//             <div className="flex-grow md:pl-8 md:pt-20 mt-5 text-[#202224]">
+//               {children}
+//             </div>
+//           </div>
+//         </div>
+//       </body>
+//     </html>
+//   );
+// }
