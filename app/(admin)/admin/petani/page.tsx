@@ -3,19 +3,16 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Table from "@/app/ui/admin/petani/tabel";
 import { Petani } from "@/app/utils/interface";
-import { SearchParams } from "@/app/utils/interface";
 import Pagination from "@/app/ui/pagination";
+import { useSearchParams } from "next/navigation";
 
-export default async function Page(props: {
-  searchParams?: Promise<{
-    query?: string;
-    page?: string;
-  }>;
-}) {
-  const searchParams = await props.searchParams;
-  const query = searchParams?.query || '';
-  const currentPage = Number(searchParams?.page) || 1;
-  
+export default function Page() {
+  const searchParams = useSearchParams();
+  const search = searchParams.get('search');
+  const page = searchParams.get('page');
+  const limit = searchParams.get('limit');
+  const [totalPages, setTotalPages] = useState(3);
+
   const [petaniList, setPetaniList] = useState<Petani[]>([
     {
       id: 1,
@@ -52,7 +49,7 @@ export default async function Page(props: {
       },
     },
   ]);
-  const [totalPages, setTotalPages] = useState<number>(0);
+  
 
   return (
     <div className="mr-5 p-10 md:mr-8 bg-white rounded-lg shadow-lg">

@@ -5,16 +5,14 @@ import { useState } from "react";
 import Pagination from "@/app/ui/pagination";
 import { Produk } from "@/app/utils/interface";
 import Card from "@/app/ui/admin/produk/card";
+import { useSearchParams } from "next/navigation";
 
-export default async function Page(props: {
-  searchParams?: Promise<{
-    query?: string;
-    page?: string;
-  }>;
-}) {
-  const searchParams = await props.searchParams;
-  const query = searchParams?.query || '';
-  const currentPage = Number(searchParams?.page) || 1;
+export default function Page() {
+  const searchParams = useSearchParams();
+  const search = searchParams.get('search');
+  const page = searchParams.get('page');
+  const limit = searchParams.get('limit');
+  const [totalPages, setTotalPages] = useState(3);
 
   const [dataProduk, setDataProduk] = useState<Produk[]>([
     {
@@ -66,7 +64,6 @@ export default async function Page(props: {
       deskripsi: "Deskripsi produk 3",
     },
   ]);
-  const [totalPages, setTotalPages] = useState<number>(3);
 
   return (
     <div className="mr-5 p-10 md:mr-8 bg-white rounded-lg mb-5 md:mb-8 shadow-lg">

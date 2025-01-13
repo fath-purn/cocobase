@@ -4,17 +4,15 @@ import Link from "next/link";
 import Table from "@/app/ui/admin/produksi/tabel";
 import { useState } from "react";
 import Pagination from "@/app/ui/pagination";
-import { Produksi, SearchParams } from "@/app/utils/interface";
+import { Produksi } from "@/app/utils/interface";
+import { useSearchParams } from "next/navigation";
 
-export default async function Page(props: {
-  searchParams?: Promise<{
-    query?: string;
-    page?: string;
-  }>;
-}) {
-  const searchParams = await props.searchParams;
-  const query = searchParams?.query || '';
-  const currentPage = Number(searchParams?.page) || 1;
+export default function Page() {
+  const searchParams = useSearchParams();
+  const search = searchParams.get('search');
+  const page = searchParams.get('page');
+  const limit = searchParams.get('limit');
+  const [totalPages, setTotalPages] = useState(3);
 
   const [produksiList, setProduksiList] = useState<Produksi[]>([
     {
@@ -74,7 +72,7 @@ export default async function Page(props: {
       status: "Selesai",
     },
   ]);
-  const [totalPages, setTotalPages] = useState(3);
+  
 
   return (
     <div className="mr-5 p-10 md:mr-8 bg-white rounded-lg mb-5 md:mb-8 shadow-lg">
