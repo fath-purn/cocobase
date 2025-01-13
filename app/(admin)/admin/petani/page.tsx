@@ -1,7 +1,12 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Icon from "@mdi/react";
-import { mdiDeleteOutline, mdiArrowUpBoldBoxOutline } from "@mdi/js";
+import {
+  mdiDeleteOutline,
+  mdiArrowUpBoldBoxOutline,
+  mdiExpandAll,
+} from "@mdi/js";
+import Link from "next/link";
 
 interface Petani {
   id: number;
@@ -73,10 +78,6 @@ export default function Page() {
     // Fungsi untuk menghapus data petani
   };
 
-  const handleModal = () => {
-    // Fungsi untuk menghapus data petani
-  };
-
   //   menggunakan useEffect untuk menangani event keyboard
   useEffect(() => {
     const handleEscKey = (event: KeyboardEvent) => {
@@ -93,8 +94,16 @@ export default function Page() {
   }, [handleCloseModal]);
 
   return (
-    <div className="h-[1000px] mr-5 p-10 md:mr-8 bg-white rounded-lg">
-      <h1 className="text-3xl font-bold mb-4">Daftar Petani</h1>
+    <div className="mr-5 p-10 md:mr-8 bg-white rounded-lg">
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-3xl font-bold mb-4">Daftar Petani</h1>
+        <Link
+          href={"/admin/petani/add"}
+          className="flex h-10 items-center rounded-lg bg-blue-600 px-4 text-sm font-medium text-white transition-colors hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+        >
+          <p>Tambah Petani</p>
+        </Link>
+      </div>
       <table className="w-full border-collapse border border-gray-300">
         <thead>
           <tr>
@@ -102,7 +111,6 @@ export default function Page() {
             <th className="border border-gray-300 p-2">Nama</th>
             <th className="border border-gray-300 p-2">Alamat</th>
             <th className="border border-gray-300 p-2">Telepon</th>
-            <th className="border border-gray-300 p-2">Status</th>
             <th className="border border-gray-300 p-2">Action</th>
           </tr>
         </thead>
@@ -117,16 +125,14 @@ export default function Page() {
                   : petani.alamat}
               </td>
               <td className="border border-gray-300 p-2">{petani.telepon}</td>
-              <td className="border border-gray-300 p-2 flex justify-center">
-                <button
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                  onClick={() => handleShowModal(petani)}
-                >
-                  Data
-                </button>
-              </td>
               <td className="border border-gray-300 p-2">
                 <div className="flex justify-center space-x-2">
+                  <button
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    onClick={() => handleShowModal(petani)}
+                  >
+                    <Icon path={mdiExpandAll} size={1} color="#fff" />
+                  </button>
                   <button
                     className="bg-green-500 hover:bg-green-700 text-white font-bold w-fit p-1 rounded"
                     onClick={() => handleUpdate(petani)}
@@ -176,9 +182,6 @@ export default function Page() {
                     <p>{selectedPetani?.produk.nama}</p>
                     <p>{selectedPetani?.produk.total}</p>
                   </div>
-                  <button onClick={handleModal} className="mt-2 rounded-b-lg p-2 w-full bg-[#fcddb5]">
-                    <p>{selectedPetani?.produk.status}</p>
-                  </button>
                 </div>
               </div>
             </div>

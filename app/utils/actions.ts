@@ -2,16 +2,15 @@
 
 import { signIn, signUp } from "@/app/utils/auth";
 import {
-  POSTWISATA,
-  UPDATEWISATA,
-  POSTHOTEL,
-  UPDATEHOTEL,
-  POSTULASAN,
-  UPDATEULASAN,
-  POSTKECAMATAN,
-  UPDATEKECAMATAN,
+  POSTKELOMPOK,
+  UPDATEKELOMPOK,
+  POSTARTIKEL,
+  UPDATEARTIKEL,
+  POSTPENGUJIAN,
+  UPDATEPENGUJIAN,
+  POSTLAPAK,
+  UPDATELAPAK,
 } from "@/app/utils/method";
-import { redirect } from "next/navigation";
 
 export async function authenticate(
   prevState: string | undefined,
@@ -64,56 +63,6 @@ export async function SignOut() {
   }
 }
 
-export async function formSubmitHandler(
-  prevState: string | undefined,
-  formData: FormData
-) {
-  try {
-    const code = await POSTWISATA("POSTWISATA", Object.fromEntries(formData));
-
-    if (code && code.success === true) {
-      window.location.href = "/dashboard/wisata";
-      return code;
-    }
-
-    if (code && code.success === false) {
-      return code;
-    } else {
-      return {
-        success: false,
-        message: "Gagal menambahkan wisata tolong cek field kembali",
-      };
-    }
-  } catch (error) {
-    return { success: false, message: "Form submission failed" };
-  }
-}
-
-export async function formUpdateHandler(
-  prevState: string | undefined,
-  formData: FormData
-) {
-  try {
-    const code = await UPDATEWISATA("POSTWISATA", Object.fromEntries(formData));
-
-    if (code && code.success === true) {
-      window.location.href = "/dashboard/wisata";
-      return code;
-    }
-
-    if (code && code.success === false) {
-      return code;
-    } else {
-      return {
-        success: false,
-        message: "Gagal Update wisata tolong cek field kembali",
-      };
-    }
-  } catch (error) {
-    return { success: false, message: "Form submission failed" };
-  }
-}
-
 export async function formDeleteHandler({
   id,
   params,
@@ -123,7 +72,7 @@ export async function formDeleteHandler({
 }) {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/${params}/${id}`,
+      `${process.env.NEXT_PUBLIC_API_URL_SIEMOO}/${params}/${id}`,
       {
         method: "DELETE",
         headers: {
@@ -148,15 +97,15 @@ export async function formDeleteHandler({
   }
 }
 
-export async function formSubmitHandlerHotel(
+export async function formSubmitHandlerArtikel(
   prevState: string | undefined,
   formData: FormData
 ) {
   try {
-    const code = await POSTHOTEL("POSTHOTEL", Object.fromEntries(formData));
+    const code = await POSTARTIKEL("POSTARTIKEL", Object.fromEntries(formData));
 
-    if (code && code.success === true) {
-      window.location.href = "/dashboard/hotel";
+    if (code && code.status === true) {
+      window.location.href = "/dashboard/artikel";
       return code;
     }
 
@@ -165,7 +114,7 @@ export async function formSubmitHandlerHotel(
     } else {
       return {
         success: false,
-        message: "Gagal menambahkan wisata tolong cek field kembali",
+        message: code.message,
       };
     }
   } catch (error) {
@@ -173,15 +122,15 @@ export async function formSubmitHandlerHotel(
   }
 }
 
-export async function formUpdateHandlerHotel(
+export async function formUpdateHandlerArtikel(
   prevState: string | undefined,
   formData: FormData
 ) {
   try {
-    const code = await UPDATEHOTEL("UPDATEHOTEL", Object.fromEntries(formData));
+    const code = await UPDATEARTIKEL("UPDATEARTIKEL", Object.fromEntries(formData));
 
-    if (code && code.success === true) {
-      window.location.href = "/dashboard/hotel";
+    if (code && code.status === true) {
+      window.location.href = "/dashboard/artikel";
       return code;
     }
 
@@ -190,7 +139,7 @@ export async function formUpdateHandlerHotel(
     } else {
       return {
         success: false,
-        message: "Gagal Update wisata tolong cek field kembali",
+        message: code.message,
       };
     }
   } catch (error) {
@@ -198,71 +147,18 @@ export async function formUpdateHandlerHotel(
   }
 }
 
-export async function formSubmitHandlerUlasan(
+export async function formSubmitHandlerKelompok(
   prevState: string | undefined,
   formData: FormData
 ) {
-  try {
-    const code = await POSTULASAN("POSTULASAN", Object.fromEntries(formData));
-
-    if (code && code.success === true) {
-      window.location.href = "/dashboard/ulasan";
-      return code;
-    }
-
-    if (code && code.success === false) {
-      return code;
-    } else {
-      return {
-        success: false,
-        message: "Gagal menambahkan wisata tolong cek field kembali",
-      };
-    }
-  } catch (error) {
-    return { success: false, message: "Form submission failed" };
-  }
-}
-
-export async function formUpdateHandlerUlasan(
-  prevState: string | undefined,
-  formData: FormData
-) {
-  try {
-    const code = await UPDATEULASAN(
-      "UPDATEULASAN",
-      Object.fromEntries(formData)
-    );
-
-    if (code && code.success === true) {
-      window.location.href = "/dashboard/ulasan";
-      return code;
-    }
-
-    if (code && code.success === false) {
-      return code;
-    } else {
-      return {
-        success: false,
-        message: "Gagal Update wisata tolong cek field kembali",
-      };
-    }
-  } catch (error) {
-    return { success: false, message: "Form submission failed" };
-  }
-}
-
-export async function formSubmitHandlerKecamatan(
-  prevState: string | undefined,
-  formData: FormData
-) {
-  try {
-    const code = await POSTKECAMATAN(
-      "POSTKECAMATAN",
+  try {  
+    const code = await POSTKELOMPOK(
+      "POSTKELOMPOK",
       Object.fromEntries(formData)
     );
 
     if (code && code.status === true) {
-      window.location.href = "/dashboard/kecamatan";
+      window.location.href = "/dashboard/kelompok";
       return code;
     }
 
@@ -271,7 +167,7 @@ export async function formSubmitHandlerKecamatan(
     } else {
       return {
         success: false,
-        message: "Gagal menambahkan kecamatan tolong cek field kembali",
+        message: code.message,
       };
     }
   } catch (error) {
@@ -279,18 +175,18 @@ export async function formSubmitHandlerKecamatan(
   }
 }
 
-export async function formUpdateHandlerKecamatan(
+export async function formUpdateHandlerKelompok(
   prevState: string | undefined,
   formData: FormData
 ) {
   try {
-    const code = await UPDATEKECAMATAN(
-      "UPDATEKECAMATAN",
+    const code = await UPDATEKELOMPOK(
+      "UPDATEKELOMPOK",
       Object.fromEntries(formData)
     );
 
     if (code && code.status === true) {
-      window.location.href = "/dashboard/kecamatan";
+      window.location.href = "/dashboard/kelompok";
       return code;
     }
 
@@ -299,7 +195,119 @@ export async function formUpdateHandlerKecamatan(
     } else {
       return {
         success: false,
-        message: "Gagal Update kecamatan tolong cek field kembali",
+        message: code.message,
+      };
+    }
+  } catch (error) {
+    return { success: false, message: "Form submission failed" };
+  }
+}
+
+export async function formSubmitHandlerPengujian(
+  prevState: string | undefined,
+  formData: FormData
+) {
+  try {  
+    const code = await POSTPENGUJIAN(
+      "POSTPENGUJIAN",
+      Object.fromEntries(formData)
+    );
+
+    if (code && code.status === true) {
+      window.location.href = "/dashboard/pengujian";
+      return code;
+    }
+
+    if (code && code.status === false) {
+      return code;
+    } else {
+      return {
+        success: false,
+        message: code.message,
+      };
+    }
+  } catch (error) {
+    return { success: false, message: "Form submission failed" };
+  }
+}
+
+export async function formUpdateHandlerPengujian(
+  prevState: string | undefined,
+  formData: FormData
+) {
+  try {
+    const code = await UPDATEPENGUJIAN(
+      "UPDATEPENGUJIAN",
+      Object.fromEntries(formData)
+    );
+
+    if (code && code.status === true) {
+      window.location.href = "/dashboard/pengujian";
+      return code;
+    }
+
+    if (code && code.success === false) {
+      return code;
+    } else {
+      return {
+        success: false,
+        message: code.message,
+      };
+    }
+  } catch (error) {
+    return { success: false, message: "Form submission failed" };
+  }
+}
+
+export async function formSubmitHandlerLapak(
+  prevState: string | undefined,
+  formData: FormData
+) {
+  try {
+    const code = await POSTLAPAK(
+      "POSTLAPAK",
+      Object.fromEntries(formData)
+    );
+
+    if (code && code.status === true) {
+      window.location.href = "/dashboard/lapak";
+      return code;
+    }
+
+    if (code && code.status === false) {
+      return code;
+    } else {
+      return {
+        success: false,
+        message: code.message,
+      };
+    }
+  } catch (error) {
+    return { success: false, message: "Form submission failed" };
+  }
+}
+
+export async function formUpdateHandlerLapak(
+  prevState: string | undefined,
+  formData: FormData
+) {
+  try {
+    const code = await UPDATELAPAK(
+      "UPDATELAPAK",
+      Object.fromEntries(formData)
+    );
+
+    if (code && code.status === true) {
+      window.location.href = "/dashboard/lapak";
+      return code;
+    }
+
+    if (code && code.success === false) {
+      return code;
+    } else {
+      return {
+        success: false,
+        message: code.message,
       };
     }
   } catch (error) {
