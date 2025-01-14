@@ -34,3 +34,12 @@ export interface Produk {
   link: string;
   deskripsi: string;
 }
+
+export interface Kiri {
+  value: number;
+  nilai: number;
+}
+
+export interface Kanan {
+  value: number;
+}
