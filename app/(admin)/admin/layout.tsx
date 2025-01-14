@@ -3,7 +3,6 @@ import { poppins } from "@/app/ui/fonts";
 import "../../globals.css";
 import SideNav from "@/app/ui/admin/sidenav";
 import TopBar from "@/app/ui/admin/topBar";
-import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export const metadata: Metadata = {
   title: {
@@ -30,13 +29,12 @@ export default function RootLayout({
           {/* Area Konten */}
           <div className="flex-grow flex flex-col md:overflow-y-auto relative">
             {/* TopBar dengan position: fixed, tetapi hanya di area konten */}
-            <div className="fixed top-0 left-64 right-0 z-50">
+            <div className="fixed top-0 left-64 right-0 z-50 text-[#202224]">
               <TopBar />
             </div>
             {/* Konten children dengan padding untuk menghindari tumpang tindih dengan TopBar */}
             <div className="flex-grow md:pl-8 md:pt-20 mt-5 text-[#202224]">
               {children}
-              <SpeedInsights />
             </div>
           </div>
         </div>

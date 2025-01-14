@@ -3,7 +3,7 @@ import Table from "@/app/ui/admin/petani/tabel";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Petani",
+  title: "Pesanan",
 };
 
 export default async function Page(props: {
@@ -22,6 +22,11 @@ export default async function Page(props: {
       nama: "Petani 1",
       alamat: "Jalan Petani 1",
       telepon: "08123456789",
+      produk: {
+        nama: "Padi",
+        total: 5,
+        status: "Dioven",
+      },
     },
     {
       id: 2,
@@ -29,12 +34,22 @@ export default async function Page(props: {
       alamat:
         "1234567 891 23456789 123456789123456789 1234567891 23456789123456789123456789 123456789123456789123456789123",
       telepon: "08123456789",
+      produk: {
+        nama: "Padi",
+        total: 5,
+        status: "Selesai",
+      },
     },
     {
       id: 3,
       nama: "Petani 3",
       alamat: "Jalan Petani 3",
       telepon: "08123456789",
+      produk: {
+        nama: "Padi",
+        total: 5,
+        status: "Diayak",
+      },
     },
   ];
 

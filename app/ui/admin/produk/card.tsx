@@ -25,7 +25,7 @@ export default function Card({ dataProduk }: { dataProduk: Produk[] }) {
         return (
           <div
             key={index}
-            className="flex flex-row justify-start md:flex-col bg-white rounded-lg shadow-md mt-3 h-full transition-transform duration-300 ease-in-out hover:scale-105"
+            className="flex flex-row justify-start md:flex-col bg-white rounded-lg shadow-md mt-3 h-full"
           >
             <Image
               src={produk.gambar}
@@ -39,7 +39,7 @@ export default function Card({ dataProduk }: { dataProduk: Produk[] }) {
                 <h3 className="text-black text-xl font-medium mb-3">
                   {produk.nama}
                 </h3>
-                <p className="text-black text-sm">{produk.deskripsi}</p>
+                <p className="text-black text-sm line-clamp-3">{produk.deskripsi}</p>
               </div>
             </div>
             <div className="mt-auto flex justify-center mb-3">

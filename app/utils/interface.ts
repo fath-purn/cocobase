@@ -17,11 +17,14 @@ export interface Petani {
   nama: string;
   alamat: string;
   telepon: string;
-  produk: {
-    nama: string;
-    total: number;
-    status: string;
-  };
+}
+
+export interface PetaniDetail {
+  id: number;
+  nama: string;
+  alamat: string;
+  telepon: string;
+  produk: Produksi[];
 }
 
 export interface Produk {

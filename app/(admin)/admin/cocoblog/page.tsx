@@ -3,8 +3,9 @@ import Card from "@/app/ui/admin/produk/card";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Produk",
+  title: "Cocoblog",
 };
+
 
 export default async function Page(props: {
   searchParams?: Promise<{
@@ -13,7 +14,7 @@ export default async function Page(props: {
   }>;
 }) {
   const searchParams = await props.searchParams;
-  const search = searchParams?.search || "";
+  const search = searchParams?.search || '';
   const currentPage = Number(searchParams?.page) || 1;
 
   const dataProduk = [
@@ -23,7 +24,7 @@ export default async function Page(props: {
       gambar:
         "https://ik.imagekit.io/purnomo/1707564605013_ztTGXktuv.jpg?updatedAt=1707564606221", // Contoh link gambar
       link: "https://www.google.com/",
-      deskripsi: "Deskripsi produk 1 Deskripsi produk 1Deskripsi produk 1",
+      deskripsi: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet nulla auctor, vestibulum magna sed, convallis ex. Sed sit amet nulla auctor, vestibulum magna sed, convallis ex. ",
     },
     {
       id: 2,
@@ -31,7 +32,7 @@ export default async function Page(props: {
       gambar:
         "https://ik.imagekit.io/purnomo/1707564460974_zCivY2pwc.jpg?updatedAt=1707564462112", // Contoh link gambar
       link: "https://www.google.com/",
-      deskripsi: "Deskripsi produk 2",
+      deskripsi: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet nulla ",
     },
     {
       id: 3,
@@ -70,20 +71,19 @@ export default async function Page(props: {
   return (
     <div className="mr-5 p-10 md:mr-8 bg-white rounded-lg mb-5 md:mb-8 shadow-lg">
       <div className="flex justify-between items-center mb-4">
-        <h1 className="text-3xl font-bold mb-4">Daftar Produksi</h1>
+        <h1 className="text-3xl font-bold mb-4">Cocoblog</h1>
         <Link
-          href={"/admin/produk/add"}
+          href={"/admin/cocoblog/add"}
           className="flex h-10 items-center rounded-lg bg-blue-600 px-4 text-sm font-medium text-white transition-colors hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
         >
           <p className="flex items-center">
-            <span className="font-bold text-xl mr-1">+</span> Tambah Produk
+            <span className="font-bold text-xl mr-1">+</span> Tambah
           </p>
         </Link>
       </div>
 
       {/* Produk */}
       <Card dataProduk={dataProduk} />
-
     </div>
   );
 }

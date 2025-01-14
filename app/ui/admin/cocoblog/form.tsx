@@ -16,7 +16,7 @@ export default function LoginForm() {
   return (
     <form action={action} className="space-y-3">
       <div className="flex-1  mr-5 p-10 md:mr-8 bg-white rounded-lg">
-        <h1 className={`mb-3 text-2xl`}>Tambah Produk</h1>
+        <h1 className={`mb-3 text-2xl`}>Tambah Cocoblog</h1>
         <div className="w-full">
           <div>
             <label
@@ -50,41 +50,17 @@ export default function LoginForm() {
           <div>
             <label
               className="mb-3 mt-5 block text-xs font-medium text-gray-900"
-              htmlFor="nama"
+              htmlFor="judul"
             >
-              Nama Produk
+              Judul
             </label>
             <div className="relative">
               <input
                 className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
-                id="nama"
+                id="judul"
                 type="text"
-                name="nama"
-                placeholder="Masukkan nama produk"
-                required
-              />
-              <Icon
-                path={mdiTimerSand}
-                size={1}
-                color="black"
-                className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900"
-              />
-            </div>
-          </div>
-          <div>
-            <label
-              className="mb-3 mt-5 block text-xs font-medium text-gray-900"
-              htmlFor="nama"
-            >
-              Nama Produk
-            </label>
-            <div className="relative">
-              <input
-                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
-                id="nama"
-                type="text"
-                name="nama"
-                placeholder="Masukkan nama produk"
+                name="judul"
+                placeholder="Judul"
                 required
               />
               <Icon
@@ -103,10 +79,9 @@ export default function LoginForm() {
               Deskripsi
             </label>
             <div className="relative">
-              <input
+              <textarea
                 className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
                 id="deskripsi"
-                type="text"
                 name="deskripsi"
                 placeholder="Deskripsi e-commerce"
                 required
@@ -155,7 +130,7 @@ function SubmitButton() {
 function CancelButton() {
   return (
     <Link
-      href="/admin/produk"
+      href="/admin/cocoblog"
       className="flex h-10 items-center rounded-lg px-4 text-sm font-medium text-white transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500 active:bg-red-600 aria-disabled:cursor-not-allowed aria-disabled:opacity-50 mt-4 bg-red-500 hover:bg-red-600 w-[15%] justify-center"
     >
       Cancel{" "}

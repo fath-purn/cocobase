@@ -1,12 +1,22 @@
-"use client";
-
 import Link from "next/link";
 import Table from "@/app/ui/admin/produksi/tabel";
-import { useState } from "react";
-import { Produksi } from "@/app/utils/interface";
+import { Metadata } from "next";
 
-export default function Page() {
-  const [produksiList, setProduksiList] = useState<Produksi[]>([
+export const metadata: Metadata = {
+  title: "Produksi",
+};
+
+export default async function Page(props: {
+  searchParams?: Promise<{
+    search?: string;
+    page?: string;
+  }>;
+}) {
+  const searchParams = await props.searchParams;
+  const search = searchParams?.search || "";
+  const currentPage = Number(searchParams?.page) || 1;
+
+  const produksiList = [
     {
       id: 1,
       petani: "Petani 1",
@@ -63,7 +73,7 @@ export default function Page() {
       jumlah: 200,
       status: "Selesai",
     },
-  ]);
+  ];
 
   return (
     <div className="mr-5 p-10 md:mr-8 bg-white rounded-lg mb-5 md:mb-8 shadow-lg">
