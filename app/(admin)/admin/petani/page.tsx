@@ -10,33 +10,13 @@ export default async function Page(props: {
   searchParams?: Promise<{
     search?: string;
     page?: string;
+    limit?: string;
   }>;
 }) {
   const searchParams = await props.searchParams;
   const search = searchParams?.search || "";
   const currentPage = Number(searchParams?.page) || 1;
-
-  const petaniList = [
-    {
-      id: 1,
-      nama: "Petani 1",
-      alamat: "Jalan Petani 1",
-      telepon: "08123456789",
-    },
-    {
-      id: 2,
-      nama: "Petani 2 tapi boong",
-      alamat:
-        "1234567 891 23456789 123456789123456789 1234567891 23456789123456789123456789 123456789123456789123456789123",
-      telepon: "08123456789",
-    },
-    {
-      id: 3,
-      nama: "Petani 3",
-      alamat: "Jalan Petani 3",
-      telepon: "08123456789",
-    },
-  ];
+  const limit = Number(searchParams?.limit) || 20;
 
   return (
     <div className="mr-5 p-10 md:mr-8 bg-white rounded-lg shadow-lg">
@@ -51,7 +31,7 @@ export default async function Page(props: {
           </p>
         </Link>
       </div>
-      <Table petaniList={petaniList} />
+      <Table currentPage={currentPage} search={search} limit={limit} />
     </div>
   );
 }

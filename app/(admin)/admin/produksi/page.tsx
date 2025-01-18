@@ -10,71 +10,14 @@ export default async function Page(props: {
   searchParams?: Promise<{
     search?: string;
     page?: string;
+    limit?: string;
   }>;
 }) {
   const searchParams = await props.searchParams;
   const search = searchParams?.search || "";
   const currentPage = Number(searchParams?.page) || 1;
-
-  const produksiList = [
-    {
-      id: 1,
-      petani: "Petani 1",
-      produk: "Beras",
-      jumlah: 100,
-      status: "Diayak",
-    },
-    {
-      id: 2,
-      petani: "Petani 2",
-      produk: "Jagung",
-      jumlah: 50,
-      status: "Dioven",
-    },
-    {
-      id: 3,
-      petani: "Petani 3",
-      produk: "Kedelai",
-      jumlah: 200,
-      status: "Dikemas",
-    },
-    {
-      id: 4,
-      petani: "Petani 4",
-      produk: "Gandum",
-      jumlah: 150,
-      status: "Selesai",
-    },
-    {
-      id: 5,
-      petani: "Petani 1",
-      produk: "Beras",
-      jumlah: 50,
-      status: "Dikemas",
-    },
-    {
-      id: 6,
-      petani: "Petani 2",
-      produk: "Jagung",
-      jumlah: 100,
-      status: "Diayak",
-    },
-    {
-      id: 7,
-      petani: "Petani 3",
-      produk: "Kedelai",
-      jumlah: 250,
-      status: "Dioven",
-    },
-    {
-      id: 8,
-      petani: "Petani 4",
-      produk: "Gandum",
-      jumlah: 200,
-      status: "Selesai",
-    },
-  ];
-
+  const limit = Number(searchParams?.limit) || 20;
+  
   return (
     <div className="mr-5 p-10 md:mr-8 bg-white rounded-lg mb-5 md:mb-8 shadow-lg">
       <div className="flex justify-between items-center mb-4">
@@ -90,7 +33,7 @@ export default async function Page(props: {
       </div>
 
       {/* Tabel */}
-      <Table produksiList={produksiList} />
+      <Table currentPage={currentPage} search={search} limit={limit} />
 
     </div>
   );

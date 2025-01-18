@@ -1,21 +1,22 @@
 import Link from "next/link";
-import Card from "@/app/ui/admin/produk/card";
+import Card from "@/app/ui/admin/cocoblog/card";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Cocoblog",
 };
 
-
 export default async function Page(props: {
   searchParams?: Promise<{
     search?: string;
     page?: string;
+    limit?: string;
   }>;
 }) {
   const searchParams = await props.searchParams;
-  const search = searchParams?.search || '';
+  const search = searchParams?.search || "";
   const currentPage = Number(searchParams?.page) || 1;
+  const limit = Number(searchParams?.limit) || 20;
 
   const dataProduk = [
     {
@@ -24,7 +25,8 @@ export default async function Page(props: {
       gambar:
         "https://ik.imagekit.io/purnomo/1707564605013_ztTGXktuv.jpg?updatedAt=1707564606221", // Contoh link gambar
       link: "https://www.google.com/",
-      deskripsi: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet nulla auctor, vestibulum magna sed, convallis ex. Sed sit amet nulla auctor, vestibulum magna sed, convallis ex. ",
+      deskripsi:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet nulla auctor, vestibulum magna sed, convallis ex. Sed sit amet nulla auctor, vestibulum magna sed, convallis ex. ",
     },
     {
       id: 2,
@@ -32,7 +34,8 @@ export default async function Page(props: {
       gambar:
         "https://ik.imagekit.io/purnomo/1707564460974_zCivY2pwc.jpg?updatedAt=1707564462112", // Contoh link gambar
       link: "https://www.google.com/",
-      deskripsi: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet nulla ",
+      deskripsi:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet nulla ",
     },
     {
       id: 3,
@@ -83,7 +86,7 @@ export default async function Page(props: {
       </div>
 
       {/* Produk */}
-      <Card dataProduk={dataProduk} />
+      <Card currentPage={currentPage} search={search} limit={limit} />
     </div>
   );
 }

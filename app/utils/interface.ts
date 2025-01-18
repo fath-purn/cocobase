@@ -16,15 +16,15 @@ export interface Petani {
   id: number;
   nama: string;
   alamat: string;
-  telepon: string;
+  no_hp: string;
 }
 
 export interface PetaniDetail {
   id: number;
   nama: string;
   alamat: string;
-  telepon: string;
-  produk: Produksi[];
+  no_hp: string;
+  produksi: Produksi[];
 }
 
 export interface Produk {
@@ -35,11 +35,20 @@ export interface Produk {
   deskripsi: string;
 }
 
+export interface Cocoblog {
+  id: number;
+  judul: string;
+  isi: string;
+  gambar: string;
+}
+
 export interface Kiri {
+  nama: string;
   value: number;
   nilai: number;
 }
 
 export interface Kanan {
-  value: number;
+  nama: string;
+  nilai: number;
 }

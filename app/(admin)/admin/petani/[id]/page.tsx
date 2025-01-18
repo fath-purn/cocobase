@@ -1,59 +1,108 @@
-import Table from "@/app/ui/admin/produksi/tabel";
+// 'use client'
+
+import Table from "@/app/ui/admin/petani/tableDetail";
 import Link from "next/link";
 import Icon from "@mdi/react";
 import { mdiWhatsapp } from "@mdi/js";
+import { useState, useEffect } from "react";
+import { getData } from "@/app/utils/fetchData";
+import { Petani, PetaniDetail, Produksi } from "@/app/utils/interface";
 
-export default async function Page(props: { params: Promise<{ id: string }> }) {
+export default async function Page(props: {
+  searchParams?: Promise<{
+    search?: string;
+    page?: string;
+    limit?: string;
+  }>;
+  params: Promise<{ id: string }>;
+}) {
+  const searchParams = await props.searchParams;
+  const search = searchParams?.search || "";
+  const currentPage = Number(searchParams?.page) || 1;
+  const limit = Number(searchParams?.limit) || 20;
+
   const params = await props.params;
   const id = params.id;
 
-  const data = {
-    id: 1,
-    nama: "Petani 1",
-    alamat: "Jalan Petani 1",
-    telepon: "08123456789",
-    produk: [
-      {
-        id: 1,
-        petani: "Petani 1",
-        produk: "Beras",
-        jumlah: 100,
-        status: "Diayak",
-      },
-      {
-        id: 2,
-        petani: "Petani 2",
-        produk: "Jagung",
-        jumlah: 50,
-        status: "Dioven",
-      },
-      {
-        id: 3,
-        petani: "Petani 3",
-        produk: "Kedelai",
-        jumlah: 200,
-        status: "Dikemas",
-      },
-      {
-        id: 4,
-        petani: "Petani 4",
-        produk: "Gandum",
-        jumlah: 150,
-        status: "Selesai",
-      },
-      {
-        id: 5,
-        petani: "Petani 1",
-        produk: "Beras",
-        jumlah: 50,
-        status: "Dikemas",
-      },
-    ],
-  };
+  const petaniList = await getData({
+    path: `/petani/${id}`,
+    limit: limit,
+    currentPage: currentPage,
+    search: search,
+  });
+
+  // const [petaniList, setPetaniList] = useState<Petani>();
+  // const [produksi, setProduksi] = useState<Produksi[]>([]);
+  
+  //   useEffect(() => {
+  //     const fetchData = async () => {
+  //       try {
+  //         const data = await getData({
+  //           path: `/petani/${id}`,
+  //           limit: limit,
+  //           currentPage: currentPage,
+  //           search: search,
+  //         });
+
+  //         console.log(data, "data");
+          
+  
+  //         setPetaniList(data);
+  //         setProduksi(data.produksi);
+  //       } catch (error) {
+  //         console.error(error);
+  //       }
+  //     };
+  //     fetchData();
+  //   }, [currentPage, search, limit]);
+
+  // const data = {
+  //   id: 1,
+  //   nama: "Petani 1",
+  //   alamat: "Jalan Petani 1",
+  //   telepon: "08123456789",
+  //   produk: [
+  //     {
+  //       id: 1,
+  //       petani: "Petani 1",
+  //       produk: "Beras",
+  //       jumlah: 100,
+  //       status: "Diayak",
+  //     },
+  //     {
+  //       id: 2,
+  //       petani: "Petani 2",
+  //       produk: "Jagung",
+  //       jumlah: 50,
+  //       status: "Dioven",
+  //     },
+  //     {
+  //       id: 3,
+  //       petani: "Petani 3",
+  //       produk: "Kedelai",
+  //       jumlah: 200,
+  //       status: "Dikemas",
+  //     },
+  //     {
+  //       id: 4,
+  //       petani: "Petani 4",
+  //       produk: "Gandum",
+  //       jumlah: 150,
+  //       status: "Selesai",
+  //     },
+  //     {
+  //       id: 5,
+  //       petani: "Petani 1",
+  //       produk: "Beras",
+  //       jumlah: 50,
+  //       status: "Dikemas",
+  //     },
+  //   ],
+  // };
 
   return (
     <div className="mr-5 p-10 md:mr-8 bg-white rounded-lg shadow-lg">
-      <h1 className="text-3xl font-bold mb-4">{data.nama} id: {id} </h1>
+      <h1 className="text-3xl font-bold mb-4">{petaniList?.nama ?? "Data tidak ditemukan"} id: {id} </h1>
 
       <div className="flex justify-between items-end mb-4">
         <div className="flex gap-3">
@@ -62,8 +111,8 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
             <p>telepon</p>
           </div>
           <div>
-            <p>: {data.alamat}</p>
-            <p>: {data.telepon}</p>
+            <p>: {petaniList?.alamat ?? "Data tidak ditemukan" }</p>
+            <p>: {petaniList?.no_hp ?? "Data tidak ditemukan"}</p>
           </div>
         </div>
         <Link
@@ -75,7 +124,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
         </Link>
       </div>
 
-        <Table produksiList={data.produk} />
+        <Table produksiList={petaniList.produksi} />
 
         <Link
           href={`/admin/petani`}

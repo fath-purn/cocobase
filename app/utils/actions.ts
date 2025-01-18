@@ -1,6 +1,6 @@
 "use client";
 
-import { signIn, signUp } from "@/app/utils/auth";
+import { signIn, signUp, signOut } from "@/app/utils/auth";
 import {
   POSTKELOMPOK,
   UPDATEKELOMPOK,
@@ -11,24 +11,28 @@ import {
   POSTLAPAK,
   UPDATELAPAK,
 } from "@/app/utils/method";
+import { toast } from "react-toastify";
 
 export async function authenticate(
   prevState: string | undefined,
   formData: FormData
 ) {
-  try {
+  try {    
+    toast.info("Loading...");
     const code = await signIn("credentials", Object.fromEntries(formData));
 
     if (code && code.success === true) {
-      window.location.href = "/dashboard";
+      toast.success("Login berhasil!");
+      window.location.href = "/admin";
       return code;
     }
 
     if (code && code.success === false) {
+      toast.error(code.message);
       return code;
     }
   } catch (error) {
-    console.error("Error during authentication:", error);
+    toast.error("Login gagal!");
     return { success: false, message: "Authentication failed" };
   }
 }
@@ -38,17 +42,21 @@ export async function register(
   formData: FormData
 ) {
   try {
+    toast.info("Loading...");
     const code = await signUp("credentials", Object.fromEntries(formData));
 
     if (code && code.success === true) {
-      window.location.href = "/dashboard";
+      toast.success("Register berhasil!");
+      window.location.href = "/auth/login";
       return code;
     }
 
     if (code && code.success === false) {
+      toast.error(code.message);
       return code;
     }
   } catch (error) {
+    toast.error("Register gagal!");
     console.error("Error during authentication:", error);
     return { success: false, message: "Authentication failed" };
   }
@@ -56,9 +64,9 @@ export async function register(
 
 export async function SignOut() {
   try {
-    localStorage.setItem("token", 'hehew');
-    window.location.href = "/login";
+    await signOut();
   } catch (error) {
+    toast.error("Register gagal!");
     return { success: false, message: "Authentication failed" };
   }
 }

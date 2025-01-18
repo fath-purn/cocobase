@@ -1,33 +1,50 @@
-import { setCookiesToken, removeCookiesToken, getCookiesToken, getAllCookies } from "@/app/utils/cookies";
+import {
+  setCookiesToken,
+  removeCookiesToken,
+} from "@/app/utils/cookies";
 import { redirect } from "next/navigation";
 import { z } from "zod";
+import { NextResponse } from 'next/server';
 
 export const signIn = async (provider: string, data: any) => {
-  const parsedCredentials = z
-    .object({ username: z.string(), password: z.string().min(5) })
-    .safeParse(data);
+  try {
+    const parsedCredentials = z
+      .object({ username: z.string(), password: z.string().min(5) })
+      .safeParse(data);
 
-  if (parsedCredentials.success) {
-    const { username, password } = data;
+    if (parsedCredentials.success) {
+      const { username, password } = data;
 
-    const user = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
-    });
+      const user = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password }),
+        }
+      );
 
-    if (!user) return null;
-    if (user.status === 200) {
-      const data = await user.json();
-      
-      localStorage.setItem("token", data.token);
-      await setCookiesToken(data.token);
+      if (!user) return null;
+      if (user.status === 200) {
+        const data = await user.json();
 
-      return data;
+        const response = NextResponse.next();
+        response.cookies.set('token', data.token, {
+          path: '/',
+          maxAge: 3600, // 1 jam
+          sameSite: 'strict',
+        });
 
-    } else {
-      return await user.json();
+        localStorage.setItem("token", data.token);
+        await setCookiesToken(data.token);
+
+        return data;
+      } else {
+        return await user.json();
+      }
     }
+  } catch (error) {
+    console.log("err :", error);
   }
 };
 
@@ -39,21 +56,23 @@ export const signUp = async (provider: string, data: any) => {
   if (parsedCredentials.success) {
     const { username, password } = data;
 
-    const user = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/register`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
-    });
+    const user = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      }
+    );
 
     if (!user) return null;
     if (user.status === 200) {
       const data = await user.json();
-      
+
       localStorage.setItem("token", data.token);
       await setCookiesToken(data.token);
 
       return data;
-
     } else {
       return await user.json();
     }
@@ -62,5 +81,4 @@ export const signUp = async (provider: string, data: any) => {
 
 export const signOut = async () => {
   removeCookiesToken();
-  redirect("/login");
 };

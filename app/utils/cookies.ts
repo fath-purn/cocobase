@@ -3,20 +3,30 @@
 import { cookies } from "next/headers";
 
 export async function setCookiesToken(token: string) {
-  (await cookies()).set({
-    name: "token",
-    value: token,
-    httpOnly: true,
-    path: "/login",
-  });
-  // const a = await getCookiesToken()
-  // console.log(a?.value, 'token');
+  try {
+    (await cookies()).set({
+      name: "token",
+      value: token,
+      httpOnly: true,
+      secure: true,
+      // path: "/auth/login",
+      maxAge: 3600,
+      sameSite: "strict",
+    });
+
+  } catch (error) {
+    console.log("Set cookies", error);
+  }
 }
 
 export async function getCookiesToken() {
-  const token = (await cookies()).get("token");
-  console.log(token?.value, "tokenapapa");
-  return token;
+  try {
+    const token = (await cookies()).get("token");
+    console.log(token, "get token");
+    return token;
+  } catch (error) {
+    console.log("Get cookies", error);
+  }
 }
 
 export async function getAllCookies() {

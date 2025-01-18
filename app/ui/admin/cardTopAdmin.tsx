@@ -7,13 +7,13 @@ import Aktivitas from "../../../public/proses.svg";
 import Image from "next/image";
 import clsx from "clsx";
 import Link from "next/link";
-import { Kiri } from "@/app/utils/interface";
+import { getData } from "@/app/utils/fetchData";
 
-export default function CardTopAdmin({
-  keterangan,
-}: {
-  keterangan: Kiri[];
-}) {
+
+export default async function CardTopAdmin() {
+  const data = await getData({ path: "/dashboard/atas" });
+
+  const keterangan = data?.atas;
 
   return (
     <>
@@ -117,7 +117,7 @@ export default function CardTopAdmin({
             >
               {keterangan[2]?.nilai ?? 0}
             </span>
-            orang mengunjungi
+            artikel baru bulan ini
           </p>
         </Link>
 
@@ -127,7 +127,7 @@ export default function CardTopAdmin({
             <div>
               <p className="text-base">Aktivitas Proses</p>
               <h2 className="text-2xl tracking-wide font-semibold mt-4">
-                {keterangan[3]?.value ?? 0}%
+                {data.kanan[5]?.nilai ?? 0}%
               </h2>
             </div>
             <div className="bg-[#FEE8CC] p-3 flex items-center justify-center aspect-square rounded-3xl w-14 h-14">

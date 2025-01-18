@@ -6,21 +6,9 @@ import {
   mdiTriangleSmallDown,
 } from "@mdi/js";
 import { Produksi } from "@/app/utils/interface";
-import { getData } from "@/app/utils/fetchData";
 import { useState, useEffect } from "react";
-import Pagination from "@/app/ui/pagination";
 
-export default function Table({
-  currentPage,
-  limit,
-  search,
-}: {
-  limit: number;
-  currentPage: number;
-  search: string;
-}) {
-  const [produksiList, setProduksiList] = useState<Produksi[]>([]);
-  const [totalItems, setTotalItems] = useState<number>(0);
+export default function Table({ produksiList }: { produksiList: Produksi[] }) {
   const [selectedStatus, setSelectedStatus] = useState<{
     value: string;
     label: string;
@@ -28,57 +16,18 @@ export default function Table({
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getData({
-          path: "/produksi",
-          limit: limit,
-          currentPage: currentPage,
-          search: search,
-          status: selectedStatus.value,
-        });
-        if (data.length === 0) {
-          setProduksiList([
-            {
-              id: 0,
-              petani: "Tidak Ditemukan",
-              produk: "Tidak Ditemukan",
-              jumlah: 0,
-              status: "Tidak Ditemukan",
-            },
-          ]);
-        } else {
-          setProduksiList(data.produksi);
-          setTotalItems(Math.ceil(data.pagination.total_items / limit));
-        }
-      } catch (error) {
-        console.error(error);
-        setProduksiList([
-          {
-            id: 0,
-            petani: "Tidak Ditemukan",
-            produk: "Tidak Ditemukan",
-            jumlah: 0,
-            status: "Tidak Ditemukan",
-          },
-        ]);
-      }
-    };
-    fetchData();
-
     const handleClickOutside = (event: MouseEvent) => {
-      if (!(event.target as HTMLElement).closest('.open')) {
-      setIsOpen(false);
+      if (!(event.target as HTMLElement).closest(".open")) {
+        setIsOpen(false);
       }
     };
-  
-    document.addEventListener('click', handleClickOutside);
-  
-    return () => {
-      document.removeEventListener('click', handleClickOutside);
-    };
 
-  }, [currentPage, search, limit, selectedStatus, isOpen]);
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [isOpen]);
 
   const handleUpdate = (produksi: Produksi) => {
     // Fungsi untuk mengupdate data produksi
@@ -97,14 +46,21 @@ export default function Table({
     { value: "SELESAI", label: "Selesai" },
   ];
 
+  const filteredProduksiList = produksiList.filter((produksi) => {
+    if (selectedStatus.value === "") {
+      return true;
+    } else {
+      return produksi.status === selectedStatus.value;
+    }
+  });
+
   return (
     <div>
       <table className="w-full border-collapse border border-gray-300">
         <thead>
           <tr className="bg-gray-100 grid grid-cols-12">
             <th className="border border-gray-300 p-2 col-span-1">No</th>
-            <th className="border border-gray-300 p-2 col-span-3">Petani</th>
-            <th className="border border-gray-300 p-2 col-span-2">Produk</th>
+            <th className="border border-gray-300 p-2 col-span-4">Produk</th>
             <th className="border border-gray-300 p-2 col-span-2">Jumlah</th>
             <th className="border border-gray-300 p-2 col-span-2">
               <div className="relative">
@@ -142,11 +98,11 @@ export default function Table({
                 )}
               </div>
             </th>
-            <th className="border border-gray-300 p-2 col-span-2">Action</th>
+            <th className="border border-gray-300 p-2 col-span-3">Action</th>
           </tr>
         </thead>
         <tbody>
-          {produksiList.map((produksi, index) => (
+          {filteredProduksiList.map((produksi, index) => (
             <tr
               key={produksi.id}
               style={{
@@ -157,10 +113,7 @@ export default function Table({
               <td className="border border-gray-300 p-[6px] text-center col-span-1">
                 {index + 1}
               </td>
-              <td className="border border-gray-300 p-[6px] col-span-3">
-                {produksi.petani}
-              </td>
-              <td className="border border-gray-300 p-[6px] col-span-2">
+              <td className="border border-gray-300 p-[6px] col-span-4">
                 {produksi.produk}{" "}
               </td>
               <td className="border border-gray-300 p-[6px] text-center col-span-2">
@@ -169,7 +122,7 @@ export default function Table({
               <td className="border border-gray-300 p-[6px] text-center col-span-2">
                 {produksi.status}
               </td>
-              <td className="border border-gray-300 p-[6px] col-span-2">
+              <td className="border border-gray-300 p-[6px] col-span-3">
                 <div className="flex justify-center space-x-2">
                   <button
                     className="bg-green-500 hover:bg-green-700 text-white font-bold w-fit p-1 rounded"
@@ -193,9 +146,6 @@ export default function Table({
           ))}
         </tbody>
       </table>
-      <div className="flex justify-center mt-5">
-        <Pagination totalPages={totalItems} />
-      </div>
     </div>
   );
 }
