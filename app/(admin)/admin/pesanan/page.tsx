@@ -66,7 +66,7 @@ export default async function Page(props: {
           </p>
         </Link>
       </div>
-      <Table petaniList={petaniList} />
+      {/* <Table petaniList={petaniList} /> */}
     </div>
   );
 }
