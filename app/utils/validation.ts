@@ -1,7 +1,13 @@
 import {z} from 'zod';
 
+export const petani = z.object({
+    nama: z.string().min(1, { message: "Nama petani harus diisi" }),
+    alamat: z.string().min(1, { message: "Alamat harus diisi" }),
+    telepon: z.string().min(10, { message: "Nomor telepon harus minimal 10 digit" }),
+  })
+
 export const artikel = z.object({
-    judul: z.string().min(3),
+    judul: z.string().min(3,),
     deskripsi: z.string().min(3),
     menu: z.enum(['sulap_limbah', 'olah_pangan', 'edukasi']),
 });
@@ -27,3 +33,4 @@ export const lapak = z.object({
     kuantiti: z.enum(['Kg', 'Liter', 'Buah', 'Ekor']),
     stok: z.number(),
 });
+

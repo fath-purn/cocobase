@@ -5,8 +5,6 @@ import { cookies } from "next/headers";
 
 export async function middleware(request: NextRequest) {
   const token = (await cookies()).get("token");
-  console.log("token", token);
-  
   if (new URL(request.url).pathname === '/auth/login' || new URL(request.url).pathname === '/') {
     if(token) {
       return NextResponse.redirect(new URL('/admin', request.url))

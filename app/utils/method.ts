@@ -1,4 +1,88 @@
-import { artikel, kelompok, lapak, pengujian } from "@/app/utils/validation";
+"use server";
+
+import {
+  artikel,
+  kelompok,
+  lapak,
+  pengujian,
+  petani,
+} from "@/app/utils/validation";
+import { cookies } from "next/headers";
+
+export const DELETE = async (id: number, params: string) => {
+  try {
+    const token = (await cookies()).get("token");
+
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/${params}/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token?.value}`,
+        },
+      }
+    );
+
+    const code = await res.json();
+    if (code.status === true) {
+      return code;
+    }
+
+    return code;
+  } catch (error) {
+    return { status: "error", message: "Server Error" };
+  }
+};
+
+export const POSTPETANI = async (_provider: string, data: any) => {
+  console.log("data:", data);
+
+  const validasi = petani.safeParse({
+    nama: data.nama,
+    alamat: data.alamat,
+    telepon: data.telepon,
+  });
+
+  const { id_update } = data;
+
+  console.log(
+    "validasi",
+    validasi.error?.issues.map((issue) => issue)
+  );
+
+  if (validasi.success) {
+    console.log("masuk");
+    const token = (await cookies()).get("token");
+    const url = id_update
+      ? `${process.env.NEXT_PUBLIC_API_URL}/petani/${id_update}`
+      : `${process.env.NEXT_PUBLIC_API_URL}/petani`;
+    const res = await fetch(url, {
+      method: id_update ? "PUT" : "POST",
+      headers: {
+        Authorization: `Bearer ${token?.value}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        nama: data.nama,
+        alamat: data.alamat,
+        no_hp: data.telepon,
+      }),
+    });
+
+    const dataJson = await res.json();
+    if (!res) {
+      return { success: false, message: "Terjadi kesalahan" };
+    }
+
+    if (res.status === 200 || res.status === 201) {
+      return dataJson;
+    } else {
+      return { success: false, message: dataJson };
+    }
+  } else {
+    return { success: false, message: validasi.error.issues };
+  }
+};
 
 export const POSTARTIKEL = async (_provider: string, data: any) => {
   const validasi = artikel.safeParse({
@@ -306,7 +390,7 @@ export const UPDATELAPAK = async (_provider: string, data: any) => {
     );
 
     const dataJson = await res.json();
-    console.log(dataJson, 'dadf')
+    console.log(dataJson, "dadf");
 
     if (!res) {
       return { success: false, message: "Terjadi kesalahan" };

@@ -10,6 +10,8 @@ import {
   UPDATEPENGUJIAN,
   POSTLAPAK,
   UPDATELAPAK,
+  POSTPETANI,
+  DELETE,
 } from "@/app/utils/method";
 import { toast } from "react-toastify";
 
@@ -17,7 +19,7 @@ export async function authenticate(
   prevState: string | undefined,
   formData: FormData
 ) {
-  try {    
+  try {
     toast.info("Loading...");
     const code = await signIn("credentials", Object.fromEntries(formData));
 
@@ -65,6 +67,7 @@ export async function register(
 export async function SignOut() {
   try {
     await signOut();
+    window.location.href = "/admin";
   } catch (error) {
     toast.error("Register gagal!");
     return { success: false, message: "Authentication failed" };
@@ -79,28 +82,67 @@ export async function formDeleteHandler({
   params: string;
 }) {
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL_SIEMOO}/${params}/${id}`,
-      {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    );
+    toast.info("Loading...");
 
-    const code = await res.json();
+    const code = await DELETE(id, params);
 
-    if (code && code.success === false) {
-      window.location.href = `/dashboard/${params}`;
-      return code;
-    } else {
-      return {
-        success: false,
-        message: "Gagal Update wisata tolong cek field kembali",
-      };
+    if (code && "success" in code && code.success === true) {
+      toast.success(code.message);
+      // window.location.href = `/admin/${params}`;
+      return Promise.resolve(code);
     }
+
+    if (code && "success" in code && code.success === false) {
+      if (Array.isArray(code.message)) {
+        toast.error(code.message);
+        return Promise.resolve({ success: false, message: code.message });
+      } else {
+        toast.error(code.message);
+        return Promise.resolve({ success: false, message: code.message });
+      }
+    }
+
   } catch (error) {
+    toast.error("Server error");
+    return Promise.resolve({ success: false, message: "Form submission failed" });
+  }
+}
+
+export async function formSubmitHandlerPetani(
+  state:
+    | { success: boolean; data: any; message?: undefined }
+    | { success: boolean; message: any; data?: undefined }
+    | undefined,
+
+  formData: FormData
+): Promise<
+  | { success: boolean; data: any; message?: undefined }
+  | { success: boolean; message: any; data?: undefined }
+> {
+  try {
+    toast.info("Loading...");
+
+    const code = await POSTPETANI("POSTPETANI", Object.fromEntries(formData));
+
+    if (code && "success" in code && code.success === true) {
+      toast.success(code.message);
+      window.location.href = "/admin/petani";
+      return code;
+    }
+
+    if (code && "success" in code && code.success === false) {
+      if (Array.isArray(code.message)) {
+        return { success: false, message: code.message };
+      } else {
+        return { success: false, message: code.message };
+      }
+    }
+
+    return { success: false, message: code.message };
+  } catch (error) {
+    toast.error("Form submission failed");
+    console.log("err:", error);
+
     return { success: false, message: "Form submission failed" };
   }
 }
@@ -135,7 +177,10 @@ export async function formUpdateHandlerArtikel(
   formData: FormData
 ) {
   try {
-    const code = await UPDATEARTIKEL("UPDATEARTIKEL", Object.fromEntries(formData));
+    const code = await UPDATEARTIKEL(
+      "UPDATEARTIKEL",
+      Object.fromEntries(formData)
+    );
 
     if (code && code.status === true) {
       window.location.href = "/dashboard/artikel";
@@ -159,7 +204,7 @@ export async function formSubmitHandlerKelompok(
   prevState: string | undefined,
   formData: FormData
 ) {
-  try {  
+  try {
     const code = await POSTKELOMPOK(
       "POSTKELOMPOK",
       Object.fromEntries(formData)
@@ -215,7 +260,7 @@ export async function formSubmitHandlerPengujian(
   prevState: string | undefined,
   formData: FormData
 ) {
-  try {  
+  try {
     const code = await POSTPENGUJIAN(
       "POSTPENGUJIAN",
       Object.fromEntries(formData)
@@ -272,10 +317,7 @@ export async function formSubmitHandlerLapak(
   formData: FormData
 ) {
   try {
-    const code = await POSTLAPAK(
-      "POSTLAPAK",
-      Object.fromEntries(formData)
-    );
+    const code = await POSTLAPAK("POSTLAPAK", Object.fromEntries(formData));
 
     if (code && code.status === true) {
       window.location.href = "/dashboard/lapak";
@@ -300,10 +342,7 @@ export async function formUpdateHandlerLapak(
   formData: FormData
 ) {
   try {
-    const code = await UPDATELAPAK(
-      "UPDATELAPAK",
-      Object.fromEntries(formData)
-    );
+    const code = await UPDATELAPAK("UPDATELAPAK", Object.fromEntries(formData));
 
     if (code && code.status === true) {
       window.location.href = "/dashboard/lapak";
