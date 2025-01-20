@@ -18,59 +18,6 @@ export default async function Page(props: {
   const currentPage = Number(searchParams?.page) || 1;
   const limit = Number(searchParams?.limit) || 20;
 
-  const dataProduk = [
-    {
-      id: 1,
-      nama: "Produk 1",
-      gambar:
-        "https://ik.imagekit.io/purnomo/1707564605013_ztTGXktuv.jpg?updatedAt=1707564606221", // Contoh link gambar
-      link: "https://www.google.com/",
-      deskripsi:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet nulla auctor, vestibulum magna sed, convallis ex. Sed sit amet nulla auctor, vestibulum magna sed, convallis ex. ",
-    },
-    {
-      id: 2,
-      nama: "Produk 2",
-      gambar:
-        "https://ik.imagekit.io/purnomo/1707564460974_zCivY2pwc.jpg?updatedAt=1707564462112", // Contoh link gambar
-      link: "https://www.google.com/",
-      deskripsi:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet nulla ",
-    },
-    {
-      id: 3,
-      nama: "Produk 3",
-      gambar:
-        "https://ik.imagekit.io/purnomo/1707563570936_e-ePqEDTX.jpg?updatedAt=1707563572052", // Contoh link gambar
-      link: "https://www.google.com/",
-      deskripsi: "Deskripsi produk 3",
-    },
-    {
-      id: 4,
-      nama: "Produk 1",
-      gambar:
-        "https://ik.imagekit.io/purnomo/1724813068777_C7Uf8sZw2.PNG?updatedAt=1724813070480", // Contoh link gambar
-      link: "https://www.google.com/",
-      deskripsi: "Deskripsi produk 1",
-    },
-    {
-      id: 5,
-      nama: "Produk 2",
-      gambar:
-        "https://ik.imagekit.io/purnomo/1707564460974_zCivY2pwc.jpg?updatedAt=1707564462112", // Contoh link gambar
-      link: "https://www.google.com/",
-      deskripsi: "Deskripsi produk 2",
-    },
-    {
-      id: 6,
-      nama: "Produk 3",
-      gambar:
-        "https://ik.imagekit.io/purnomo/1707563570936_e-ePqEDTX.jpg?updatedAt=1707563572052", // Contoh link gambar
-      link: "https://www.google.com/",
-      deskripsi: "Deskripsi produk 3",
-    },
-  ];
-
   return (
     <div className="mr-5 p-10 md:mr-8 bg-white rounded-lg mb-5 md:mb-8 shadow-lg">
       <div className="flex justify-between items-center mb-4">

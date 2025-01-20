@@ -49,7 +49,7 @@ export default function TableUpdate({ id }: { id: string }) {
   return (
     <form action={action} className="space-y-3">
       <div className="flex-1  mr-5 p-10 md:mr-8 bg-white rounded-lg">
-        <h1 className={`mb-3 text-2xl`}>Tambah Petani</h1>
+        <h1 className={`mb-3 text-2xl`}>Edit Petani</h1>
         <div className="w-full">
           <div>
             <label

@@ -15,6 +15,11 @@ export const produksi = z.object({
   status: z.optional(z.enum(["DIAYAK", "DIOVEN", "DISORTIR", "DIKEMAS", "SELESAI"])),
 });
 
+export const cocoblog = z.object({
+  judul: z.string().min(1, { message: "Judul harus diisi" }),
+  isi: z.string().min(1, { message: "Deksripsi harus diisi" }),
+});
+
 export const statusProduksi = z.object({
   status: z.optional(z.enum(["DIAYAK", "DIOVEN", "DISORTIR", "DIKEMAS", "SELESAI"])),
 });

@@ -12,6 +12,7 @@ import {
 import { useState, useEffect } from "react";
 import Pagination from "@/app/ui/pagination";
 import { getData } from "@/app/utils/fetchData";
+import { formDeleteHandler } from "@/app/utils/actions";
 
 export default function Card({
   currentPage,
@@ -24,6 +25,15 @@ export default function Card({
 }) {
   const [cocoblogList, setCocoblogList] = useState<Cocoblog[]>([]);
   const [totalItems, setTotalItems] = useState<number>(0);
+  const [result, setResult] = useState(null);
+
+  const handleDelete = async (id: number, params: string) => {
+      const result = await formDeleteHandler({ id, params });
+      setResult(result);
+      if (result.success) {
+        setCocoblogList(cocoblogList.filter((petani) => petani.id !== id));
+      }
+    };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,15 +52,7 @@ export default function Card({
       }
     };
     fetchData();
-  }, [currentPage, search, limit]);
-
-  const handleUpdate = (cocoblog: Cocoblog) => {
-    // Fungsi untuk mengupdate data produk
-  };
-
-  const handleDelete = (cocoblog: Cocoblog) => {
-    // Fungsi untuk menghapus data produk
-  };
+  }, [currentPage, search, limit, result]);
 
   return (
     <div>
@@ -88,19 +90,19 @@ export default function Card({
                     >
                       <Icon path={mdiExpandAll} size={1} color="#fff" />
                     </Link>
-                    <button
+                    <Link
                       className="bg-green-500 hover:bg-green-700 text-white font-bold w-fit p-1 rounded"
-                      onClick={() => handleUpdate(data)}
+                      href={`/admin/cocoblog/${data.id}/edit`}
                     >
                       <Icon
                         path={mdiArrowUpBoldBoxOutline}
                         size={1}
                         color="#fff"
                       />
-                    </button>
+                    </Link>
                     <button
                       className="bg-red-500 hover:bg-red-700 text-white font-bold w-fit p-1 rounded"
-                      onClick={() => handleDelete(data)}
+                      onClick={() => handleDelete(data.id, "cocoblog")}
                     >
                       <Icon path={mdiDeleteOutline} size={1} color="#fff" />
                     </button>
