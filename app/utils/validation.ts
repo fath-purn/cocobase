@@ -20,6 +20,13 @@ export const cocoblog = z.object({
   isi: z.string().min(1, { message: "Deksripsi harus diisi" }),
 });
 
+export const produk = z.object({
+  nama: z.string().min(1, { message: "Judul harus diisi" }),
+  deskripsi: z.string().min(1, { message: "Deksripsi harus diisi" }),
+  link: z.string().min(1, { message: "Deksripsi harus diisi" }),
+  jumlah: z.string().min(1, { message: "Deksripsi harus diisi" }),
+});
+
 export const statusProduksi = z.object({
   status: z.optional(z.enum(["DIAYAK", "DIOVEN", "DISORTIR", "DIKEMAS", "SELESAI"])),
 });

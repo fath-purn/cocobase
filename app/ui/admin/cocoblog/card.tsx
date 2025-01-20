@@ -28,12 +28,12 @@ export default function Card({
   const [result, setResult] = useState(null);
 
   const handleDelete = async (id: number, params: string) => {
-      const result = await formDeleteHandler({ id, params });
-      setResult(result);
-      if (result.success) {
-        setCocoblogList(cocoblogList.filter((petani) => petani.id !== id));
-      }
-    };
+    const result = await formDeleteHandler({ id, params });
+    setResult(result);
+    if (result.success) {
+      setCocoblogList(cocoblogList.filter((petani) => petani.id !== id));
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -117,10 +117,9 @@ export default function Card({
           </div>
         )}
       </div>
-    <div className="flex justify-center mt-8">
-
-      <Pagination totalPages={totalItems} />
-    </div>
+      <div className="flex justify-center mt-8">
+        <Pagination totalPages={totalItems} />
+      </div>
     </div>
   );
 }

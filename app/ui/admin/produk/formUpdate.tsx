@@ -7,12 +7,29 @@ import { useFormStatus } from "react-dom";
 import { formSubmitHandlerFile } from "@/app/utils/actions";
 import Link from "next/link";
 import { useActionState, useState, useEffect } from "react";
+import { Produk } from "@/app/utils/interface";
+import { getData } from "@/app/utils/fetchData";
 
-export default function LoginForm() {
+export default function FormUpdate({ id }: { id: string }) {
   const [code, action] = useActionState(formSubmitHandlerFile, undefined);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
-  useEffect(() => {
+  const [list, setList] = useState<Produk>();
+  
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const data = await getData({
+            path: `/produk/${id}`,
+          });
+  
+          setList(data);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      fetchData();
+
     if (code !== undefined && code.success === false) {
       const errors: { [key: string]: string } = {};
       if (Array.isArray(code.message)) {
@@ -31,7 +48,7 @@ export default function LoginForm() {
   return (
     <form action={action} className="space-y-3">
       <div className="flex-1  mr-5 p-10 md:mr-8 bg-white rounded-lg">
-        <h1 className={`mb-3 text-2xl`}>Tambah Produk</h1>
+        <h1 className={`mb-3 text-2xl`}>Edit Produk</h1>
         <div className="w-full">
           <div>
             <label
@@ -75,6 +92,7 @@ export default function LoginForm() {
                 name="nama"
                 placeholder="Judul"
                 required
+                defaultValue={list?.nama ?? ""}
               />
               <Icon
                 path={mdiTimerSand}
@@ -103,6 +121,7 @@ export default function LoginForm() {
                 name="deskripsi"
                 placeholder="Deskripsi"
                 required
+                defaultValue={list?.deskripsi}
               />
               <Icon
                 path={mdiTextBoxOutline}
@@ -132,6 +151,7 @@ export default function LoginForm() {
                 name="link"
                 placeholder="Link Penjualan Produk"
                 required
+                defaultValue={list?.link}
               />
               <Icon
                 path={mdiLink}
@@ -161,6 +181,7 @@ export default function LoginForm() {
                 name="jumlah"
                 placeholder="Link Penjualan Produk"
                 required
+                defaultValue={list?.jumlah}
               />
               <Icon
                 path={mdiCounter}
@@ -174,6 +195,13 @@ export default function LoginForm() {
             )}
           </div>
         </div>
+        <input
+            id="id_update"
+            type="text"
+            name="id_update"
+            hidden
+            defaultValue={id}
+          />
         <input
           id="params"
           type="text"

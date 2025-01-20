@@ -7,6 +7,7 @@ import {
   lapak,
   pengujian,
   petani,
+  produk,
   produksi,
   statusProduksi,
 } from "@/app/utils/validation";
@@ -81,25 +82,19 @@ function getValidasiDanBody(params: string, data: any) {
         },
       };
     case "cocoblog":
-      const validasi = cocoblog.safeParse({
-        judul: data.judul,
-        isi: data.isi,
-      });
-      if (validasi.success) {
-        const formData = new FormData();
-        formData.append(`image`, data.image);
-        formData.append("judul", data.judul);
-        formData.append("isi", data.isi);
-        return {
-          validasi,
-          body: formData,
-        };
-      } else {
-        return {
-          validasi,
-          body: null,
-        };
-      }
+      return {
+        validasi: cocoblog.safeParse({
+          judul: data.judul,
+          isi: data.isi,
+        })}
+    case "produk":
+      return {
+        validasi: produk.safeParse({
+          nama: data.nama,
+          deskripsi: data.deskripsi,
+          link: data.link,
+          jumlah: data.jumlah,
+        })}
     default:
       throw new Error(`Tidak ada validasi untuk ${params}`);
   }
@@ -154,10 +149,28 @@ export const POSTFILE = async (_provider: string, data: any) => {
 
   console.log(validasi.error?.issues, "hmm bisa gasihh");
 
-  const formData = new FormData();
-  formData.append(`image`, data.image);
-  formData.append("judul", data.judul);
-  formData.append("isi", data.isi);
+  let formData = new FormData();
+
+  // Handle different cases
+  switch (params) {
+    case "cocoblog":
+      formData.append(`image`, data.image);
+      formData.append("judul", data.judul);
+      formData.append("isi", data.isi);
+      break;
+
+    case "produk":
+      formData.append(`image`, data.image);
+      formData.append("nama", data.nama);
+      formData.append("deskripsi", data.deskripsi);
+      formData.append("link", data.link);
+      formData.append("jumlah", data.jumlah);
+      break;
+
+    default:
+      console.error("Invalid params:", params);
+      return { success: false, message: "Invalid params" };
+  }
 
   if (validasi.success) {
     const token = (await cookies()).get("token");

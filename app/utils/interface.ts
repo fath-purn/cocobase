@@ -42,6 +42,7 @@ export interface Produk {
   gambar: string;
   link: string;
   deskripsi: string;
+  jumlah: number;
 }
 
 export interface Cocoblog {

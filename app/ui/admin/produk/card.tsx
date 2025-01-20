@@ -12,6 +12,7 @@ import {
 import { useState, useEffect } from "react";
 import Pagination from "@/app/ui/pagination";
 import { getData } from "@/app/utils/fetchData";
+import { formDeleteHandler } from "@/app/utils/actions";
 
 export default function Card({
   currentPage,
@@ -24,7 +25,15 @@ export default function Card({
 }) {
   const [produkList, setProdukList] = useState<Produk[]>([]);
   const [totalItems, setTotalItems] = useState<number>(0);
+const [result, setResult] = useState(null);
 
+  const handleDelete = async (id: number, params: string) => {
+      const result = await formDeleteHandler({ id, params });
+      setResult(result);
+      if (result.success) {
+        setProdukList(produkList.filter((petani) => petani.id !== id));
+      }
+    };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -42,15 +51,7 @@ export default function Card({
       }
     };
     fetchData();
-  }, [currentPage, search, limit]);
-
-  const handleUpdate = (produk: Produk) => {
-    // Fungsi untuk mengupdate data produk
-  };
-
-  const handleDelete = (produk: Produk) => {
-    // Fungsi untuk menghapus data produk
-  };
+  }, [currentPage, search, limit, result]);
 
   return (
     <div>
@@ -71,10 +72,13 @@ export default function Card({
                 />
                 <div className="flex items-center justify-center my-3 ml-1 md:ml-0 w-[50%] md:w-full">
                   <div className="w-[90%]">
-                    <h3 className="text-black text-xl font-medium mb-3">
+                    <h3 className=" text-xl font-medium mb-3">
                       {produk.nama}
                     </h3>
-                    <p className="text-black text-sm line-clamp-3">
+                    <p className="text-sm font-medium mb-1 line-clamp-3">
+                      Penjualan: {produk.jumlah}
+                    </p>
+                    <p className=" text-sm line-clamp-3">
                       {produk.deskripsi}
                     </p>
                   </div>
@@ -88,19 +92,19 @@ export default function Card({
                     >
                       <Icon path={mdiExpandAll} size={1} color="#fff" />
                     </Link>
-                    <button
+                    <Link
                       className="bg-green-500 hover:bg-green-700 text-white font-bold w-fit p-1 rounded"
-                      onClick={() => handleUpdate(produk)}
+                      href={`/admin/produk/${produk.id}/edit`}
                     >
                       <Icon
                         path={mdiArrowUpBoldBoxOutline}
                         size={1}
                         color="#fff"
                       />
-                    </button>
+                    </Link>
                     <button
                       className="bg-red-500 hover:bg-red-700 text-white font-bold w-fit p-1 rounded"
-                      onClick={() => handleDelete(produk)}
+                      onClick={() => handleDelete(produk.id, "produk")}
                     >
                       <Icon path={mdiDeleteOutline} size={1} color="#fff" />
                     </button>
