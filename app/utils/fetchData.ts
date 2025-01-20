@@ -26,9 +26,39 @@ export async function getData({
     }
   );
 
-  if (!res.ok) {
-    throw new Error(`HTTP error! status: ${res.status}`);
-  }
+  // if (!res.ok) {
+  //   throw new Error(`HTTP error! status: ${res.status}`);
+  // }
+
+  const data = await res.json();
+
+  // await new Promise((resolve) => setTimeout(resolve, 4000));  
+
+  return data.data;
+}
+
+
+export async function getDataNoQuery({
+  path,
+}: {
+  path: string;
+}) {
+  const token = (await cookies()).get("token");
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}${path}?limit=100`,
+    {
+      cache: "no-store",
+      headers: {
+        Authorization: `Bearer ${token?.value}`,
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  // if (!res.ok) {
+  //   throw new Error(`HTTP error! status: ${res.status}`);
+  // }
 
   const data = await res.json();
 

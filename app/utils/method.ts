@@ -6,6 +6,8 @@ import {
   lapak,
   pengujian,
   petani,
+  produksi,
+  statusProduksi
 } from "@/app/utils/validation";
 import { cookies } from "next/headers";
 
@@ -34,50 +36,89 @@ export const DELETE = async (id: number, params: string) => {
   }
 };
 
+function getValidasiDanBody(params: string, data: any) {
+  switch (params) {
+    case "petani":
+      return {
+        validasi: petani.safeParse({
+          nama: data.nama,
+          alamat: data.alamat,
+          telepon: data.telepon,
+        }),
+        body: {
+          nama: data.nama,
+          alamat: data.alamat,
+          no_hp: data.telepon,
+        },
+      };
+    case "produksi":
+      return {
+        validasi: produksi.safeParse({
+          id_petani: data.id_petani,
+          produk: data.produk,
+          jumlah: data.jumlah,
+        }),
+        body: {
+          id_petani: data.id_petani,
+          produk: data.produk,
+          jumlah: data.jumlah,
+          ...(data.status && { status: data.status }),
+        },
+      };
+    case "produksi/status":
+      return {
+        validasi: statusProduksi.safeParse({
+          id_petani: data.id_petani,
+          produk: data.produk,
+          jumlah: data.jumlah,
+        }),
+        body: {
+          id_petani: data.id_petani,
+          produk: data.produk,
+          jumlah: data.jumlah,
+          ...(data.status && { status: data.status }),
+        },
+      };
+    default:
+      throw new Error(`Tidak ada validasi untuk ${params}`);
+  }
+}
+
 export const POSTPETANI = async (_provider: string, data: any) => {
-  console.log("data:", data);
+  console.log("data", data);
 
-  const validasi = petani.safeParse({
-    nama: data.nama,
-    alamat: data.alamat,
-    telepon: data.telepon,
-  });
+  const { id_update, params } = data;
+  const { validasi, body } = getValidasiDanBody(params, data);
 
-  const { id_update } = data;
-
-  console.log(
-    "validasi",
-    validasi.error?.issues.map((issue) => issue)
-  );
+  console.log(validasi.error?.issues);
 
   if (validasi.success) {
-    console.log("masuk");
     const token = (await cookies()).get("token");
     const url = id_update
-      ? `${process.env.NEXT_PUBLIC_API_URL}/petani/${id_update}`
-      : `${process.env.NEXT_PUBLIC_API_URL}/petani`;
+      ? `${process.env.NEXT_PUBLIC_API_URL}/${params}/${id_update}`
+      : `${process.env.NEXT_PUBLIC_API_URL}/${params}`;
     const res = await fetch(url, {
       method: id_update ? "PUT" : "POST",
       headers: {
         Authorization: `Bearer ${token?.value}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        nama: data.nama,
-        alamat: data.alamat,
-        no_hp: data.telepon,
-      }),
+      body: JSON.stringify(body),
     });
 
     const dataJson = await res.json();
+
+    console.log(url);
+    console.log("res:", dataJson);
+
     if (!res) {
-      return { success: false, message: "Terjadi kesalahan" };
+      return { ...dataJson, params };
     }
 
     if (res.status === 200 || res.status === 201) {
-      return dataJson;
+      return { ...dataJson, params };
     } else {
-      return { success: false, message: dataJson };
+      return { ...dataJson, params };
     }
   } else {
     return { success: false, message: validasi.error.issues };

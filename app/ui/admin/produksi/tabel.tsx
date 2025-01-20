@@ -9,6 +9,13 @@ import { Produksi } from "@/app/utils/interface";
 import { getData } from "@/app/utils/fetchData";
 import { useState, useEffect } from "react";
 import Pagination from "@/app/ui/pagination";
+import Link from "next/link";
+import clsx from "clsx";
+import { useFormStatus } from "react-dom";
+import {
+  formSubmitHandlerPetani,
+  formDeleteHandler,
+} from "@/app/utils/actions";
 
 export default function Table({
   currentPage,
@@ -26,6 +33,16 @@ export default function Table({
     label: string;
   }>({ value: "", label: "Status" });
   const [isOpen, setIsOpen] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedProduksi, setSelectedProduksi] = useState<Produksi | null>(
+    null
+  );
+  const [result, setResult] = useState<{
+    success: boolean;
+    data?: any;
+    message?: any;
+  } | null>(null);
+  const { pending } = useFormStatus();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -67,35 +84,60 @@ export default function Table({
     fetchData();
 
     const handleClickOutside = (event: MouseEvent) => {
-      if (!(event.target as HTMLElement).closest('.open')) {
-      setIsOpen(false);
+      if (!(event.target as HTMLElement).closest(".open")) {
+        setIsOpen(false);
       }
     };
-  
-    document.addEventListener('click', handleClickOutside);
-  
+
+    document.addEventListener("click", handleClickOutside);
+
     return () => {
-      document.removeEventListener('click', handleClickOutside);
+      document.removeEventListener("click", handleClickOutside);
     };
+  }, [currentPage, search, limit, selectedStatus, isOpen, result]);
 
-  }, [currentPage, search, limit, selectedStatus, isOpen]);
-
-  const handleUpdate = (produksi: Produksi) => {
-    // Fungsi untuk mengupdate data produksi
+  const handleDelete = async (id: number, params: string) => {
+    const result = await formDeleteHandler({ id, params });
+    setResult(result);
+    if (result.success) {
+      setProduksiList(produksiList.filter((produksi) => produksi.id !== id));
+    }
   };
 
-  const handleDelete = (produksi: Produksi) => {
-    // Fungsi untuk menghapus data produksi
+  const handleUpdate = async (id: number, params: string, status: string) => {
+    const formData = new FormData();
+    formData.append("id_update", id.toString());
+    formData.append("params", params);
+    formData.append("status", status);
+    const result = await formSubmitHandlerPetani(undefined, formData);
+    setResult(result);
+    if (result.success) {
+      setShowModal(!showModal);
+      setProduksiList(
+        produksiList.map((produksi) => {
+          if (produksi.id === id) {
+            return { ...produksi, status: status };
+          }
+          return produksi;
+        })
+      );
+    }
   };
 
-  const statusList = [
-    { value: "", label: "Status" },
+  const handleShowModal = (produksi: Produksi) => {
+    setShowModal(true);
+    setSelectedProduksi(produksi);
+  };
+
+  const statusListOption = [
     { value: "DIAYAK", label: "Diayak" },
     { value: "DIOVEN", label: "Dioven" },
     { value: "DISORTIR", label: "Disortir" },
     { value: "DIKEMAS", label: "Dikemas" },
     { value: "SELESAI", label: "Selesai" },
   ];
+
+  const statusList = [{ value: "", label: "Status" }, ...statusListOption];
 
   return (
     <div>
@@ -167,23 +209,37 @@ export default function Table({
                 {produksi.jumlah}
               </td>
               <td className="border border-gray-300 p-[6px] text-center col-span-2">
-                {produksi.status}
+                <button
+                  className={clsx(
+                    "py-1 px-2 rounded",
+                    produksi.status === "DIAYAK" && "bg-yellow-300",
+                    produksi.status === "DIOVEN" && "bg-orange-300",
+                    produksi.status === "DISORTIR" && "bg-blue-300",
+                    produksi.status === "DIKEMAS" && "bg-purple-300",
+                    produksi.status === "SELESAI" && "bg-green-300"
+                  )}
+                  onClick={() => {
+                    handleShowModal(produksi);
+                  }}
+                >
+                  {produksi.status}
+                </button>
               </td>
               <td className="border border-gray-300 p-[6px] col-span-2">
                 <div className="flex justify-center space-x-2">
-                  <button
+                  <Link
                     className="bg-green-500 hover:bg-green-700 text-white font-bold w-fit p-1 rounded"
-                    onClick={() => handleUpdate(produksi)}
+                    href={`/admin/produksi/${produksi.id}/edit`}
                   >
                     <Icon
                       path={mdiArrowUpBoldBoxOutline}
                       size={1}
                       color="#fff"
                     />
-                  </button>
+                  </Link>
                   <button
                     className="bg-red-500 hover:bg-red-700 text-white font-bold w-fit p-1 rounded"
-                    onClick={() => handleDelete(produksi)}
+                    onClick={() => handleDelete(produksi.id, "produksi")}
                   >
                     <Icon path={mdiDeleteOutline} size={1} color="#fff" />
                   </button>
@@ -193,6 +249,98 @@ export default function Table({
           ))}
         </tbody>
       </table>
+      {showModal && (
+        <div
+          className="fixed top-0 left-0 w-full h-full bg-gray-500 bg-opacity-75 flex justify-center items-center z-50"
+          onClick={() => setShowModal(false)}
+        >
+          <div
+            className="bg-white p-4 rounded-lg w-1/2 h -1/2 overflow-y-auto z-50"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2 className="text-xl font-semibold mb-2">Deskripsi Produksi</h2>
+            <div className="grid grid-cols-6 gap-4">
+              <div className="col-span-1">
+                <p>Petani</p>
+                <p>Produk</p>
+                <p>jumlah</p>
+                <p>Status</p>
+              </div>
+              <div className="col-span-3">
+                <p>: {selectedProduksi?.petani}</p>
+                <p>: {selectedProduksi?.produk}</p>
+                <p>: {selectedProduksi?.jumlah}</p>
+                <p>: {selectedProduksi?.status}</p>
+              </div>
+              <div className="col-span-2">
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    const formData = new FormData(e.currentTarget);
+                    handleUpdate(
+                      Number(formData.get("id_update")),
+                      formData.get("params") as string,
+                      formData.get("status") as string
+                    );
+                  }}
+                >
+                  <label
+                    className="mb-3 mt-5 block text-xs font-medium text-gray-900"
+                    htmlFor="status"
+                  >
+                    Status
+                  </label>
+                  <div className="">
+                    <select
+                      className={`peer block w-full rounded-md border border-gray-200 py-[9px] pl-3 text-sm outline-2 placeholder:text-gray-500`}
+                      id="status"
+                      name="status"
+                      required
+                      defaultValue={selectedProduksi?.status ?? ""}
+                    >
+                      <option value={""} disabled>
+                        Pilih Status
+                      </option>
+                      {statusListOption.map((item, index: number) => (
+                        <option key={index} value={item.value}>
+                          {item.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <input
+                    id="params"
+                    type="text"
+                    name="params"
+                    hidden
+                    defaultValue={"produksi/status"}
+                  />
+                  <input
+                    id="id_update"
+                    type="text"
+                    name="id_update"
+                    hidden
+                    defaultValue={selectedProduksi?.id}
+                  />
+                  <button
+                    aria-disabled={pending}
+                    className="mt-4 bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded"
+                  >
+                    Submit
+                  </button>
+                </form>
+              </div>
+            </div>
+
+            <button
+              className="mt-4 bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded"
+              onClick={() => setShowModal(!showModal)}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
       <div className="flex justify-center mt-5">
         <Pagination totalPages={totalItems} />
       </div>

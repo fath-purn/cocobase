@@ -12,6 +12,15 @@ export interface Produksi {
   status: string;
 }
 
+export interface ProduksiDetail {
+  id: number;
+  id_petani: number;
+  petani: string;
+  produk: string;
+  jumlah: number;
+  status: string;
+}
+
 export interface Petani {
   id: number;
   nama: string;

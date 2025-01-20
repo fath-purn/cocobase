@@ -3,27 +3,28 @@
 import { useState, useEffect, useActionState } from "react";
 import Icon from "@mdi/react";
 import { mdiAccount, mdiTimerSand, mdiCounter } from "@mdi/js";
-import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 import { Button } from "../button";
 import { useFormStatus } from "react-dom";
 import { formSubmitHandlerPetani } from "@/app/utils/actions";
 import Link from "next/link";
-import { getDataNoQuery } from "@/app/utils/fetchData";
-import { Petani } from "@/app/utils/interface";
+import { getDataNoQuery, getData } from "@/app/utils/fetchData";
+import { Petani, ProduksiDetail } from "@/app/utils/interface";
 
-export default function LoginForm() {
+export default function TableUpdate({ id }: { id: string }) {
   const [code, action] = useActionState(formSubmitHandlerPetani, undefined);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [petaniList, setPetaniList] = useState<Petani[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [produksiList, setProduksiList] = useState<ProduksiDetail>();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getDataNoQuery({
+        const dataPetani = await getDataNoQuery({
           path: "/petani",
         });
-        if (data.length === 0) {
+
+        if (dataPetani.length === 0) {
           setPetaniList([
             {
               id: 0,
@@ -33,8 +34,14 @@ export default function LoginForm() {
             },
           ]);
         } else {
-          setPetaniList(data.petani);
+          setPetaniList(dataPetani.petani);
         }
+
+        const dataProduksi = await getData({
+          path: `/produksi/${id}`,
+        });
+
+        setProduksiList(dataProduksi);
       } catch (error) {
         console.error(error);
         setPetaniList([
@@ -47,6 +54,7 @@ export default function LoginForm() {
         ]);
       }
     };
+
     fetchData();
 
     if (code !== undefined && code.success === false) {
@@ -62,12 +70,23 @@ export default function LoginForm() {
       }
       setErrors(errors);
     }
-  }, [code]);
+  }, [code, id]);
+
+  const statusList = [
+    { value: "", label: "Status" },
+    { value: "DIAYAK", label: "Diayak" },
+    { value: "DIOVEN", label: "Dioven" },
+    { value: "DISORTIR", label: "Disortir" },
+    { value: "DIKEMAS", label: "Dikemas" },
+    { value: "SELESAI", label: "Selesai" },
+  ];
 
   return (
     <form action={action} className="space-y-3">
       <div className="flex-1  mr-5 p-10 md:mr-8 bg-white rounded-lg">
-        <h1 className={`mb-3 text-2xl`}>Tambah Produksi</h1>
+        <h1 className={`mb-3 text-2xl`}>
+          Edit Produksi {produksiList?.petani}
+        </h1>
         <div className="w-full">
           <div>
             <label
@@ -129,6 +148,40 @@ export default function LoginForm() {
           <div>
             <label
               className="mb-3 mt-5 block text-xs font-medium text-gray-900"
+              htmlFor="status"
+            >
+              Status
+            </label>
+            <div className="relative grid grid-cols-3  gap-3 justify-center items-center">
+              <div className="col-span-2 flex items-center">
+                <select
+                  className={`peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500`}
+                  id="status"
+                  name="status"
+                  required
+                  defaultValue={produksiList?.status ?? ""}
+                >
+                  <option value={0} disabled>
+                    Pilih Status
+                  </option>
+                  {statusList.map((item, index: number) => (
+                    <option key={index} value={item.value}>
+                      {item.label}
+                    </option>
+                  ))}
+                </select>
+                <Icon
+                  path={mdiAccount}
+                  size={1}
+                  color="black"
+                  className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900"
+                />
+              </div>
+            </div>
+          </div>
+          <div>
+            <label
+              className="mb-3 mt-5 block text-xs font-medium text-gray-900"
               htmlFor="produk"
             >
               Produk
@@ -143,6 +196,7 @@ export default function LoginForm() {
                 name="produk"
                 placeholder="Masukkan nama produksi"
                 required
+                defaultValue={produksiList?.produk ?? ""}
               />
               <Icon
                 path={mdiTimerSand}
@@ -173,6 +227,7 @@ export default function LoginForm() {
                   name="jumlah"
                   placeholder="Jumlah produksi"
                   required
+                  defaultValue={produksiList?.jumlah ?? 0}
                 />
                 <Icon
                   path={mdiCounter}
@@ -188,6 +243,13 @@ export default function LoginForm() {
               name="params"
               hidden
               defaultValue={"produksi"}
+            />
+            <input
+              id="id_update"
+              type="text"
+              name="id_update"
+              hidden
+              defaultValue={id}
             />
           </div>
           <div className="flex flex-row gap-3 justify-end">

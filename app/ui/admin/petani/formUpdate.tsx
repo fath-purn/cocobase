@@ -24,8 +24,6 @@ export default function TableUpdate({ id }: { id: string }) {
           path: `/petani/${id}`,
         });
 
-        console.log(data, "data");
-
         setPetaniList(data);
       } catch (error) {
         console.error(error);
@@ -148,7 +146,14 @@ export default function TableUpdate({ id }: { id: string }) {
             type="text"
             name="id_update"
             hidden
-            value={id}
+            defaultValue={id}
+          />
+          <input
+            id="params"
+            type="text"
+            name="params"
+            hidden
+            defaultValue={"petani"}
           />
         </div>
         <div className="flex flex-row gap-3 justify-end">

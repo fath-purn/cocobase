@@ -122,6 +122,13 @@ export default function Table() {
                 <p className="text-red-500 text-sm mt -1">{errors.telepon}</p>
               )}
           </div>
+          <input
+            id="params"
+            type="text"
+            name="params"
+            hidden
+            defaultValue={"petani"}
+          />
         </div>
         <div className="flex flex-row gap-3 justify-end">
           <CancelButton />

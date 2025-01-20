@@ -101,10 +101,12 @@ export async function formDeleteHandler({
         return Promise.resolve({ success: false, message: code.message });
       }
     }
-
   } catch (error) {
     toast.error("Server error");
-    return Promise.resolve({ success: false, message: "Form submission failed" });
+    return Promise.resolve({
+      success: false,
+      message: "Form submission failed",
+    });
   }
 }
 
@@ -126,23 +128,31 @@ export async function formSubmitHandlerPetani(
 
     if (code && "success" in code && code.success === true) {
       toast.success(code.message);
-      window.location.href = "/admin/petani";
+       if(code.params === "produksi/status") {
+        return Promise.resolve(code);
+        }
+        
+        window.location.href = `/admin/${code.params}`;
       return code;
     }
 
     if (code && "success" in code && code.success === false) {
       if (Array.isArray(code.message)) {
+        toast.error(code.message);
         return { success: false, message: code.message };
       } else {
+        toast.error(code.message);
         return { success: false, message: code.message };
       }
     }
 
+    console.log("empat")
+
+
+    toast.success(code.message);
     return { success: false, message: code.message };
   } catch (error) {
     toast.error("Form submission failed");
-    console.log("err:", error);
-
     return { success: false, message: "Form submission failed" };
   }
 }
