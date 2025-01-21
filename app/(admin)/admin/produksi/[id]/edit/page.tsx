@@ -2,7 +2,7 @@ import Form from "@/app/ui/admin/produksi/formUpdate";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Tambah",
+  title: "Produksi",
 };
 
 export default async function Page(props: {params: Promise<{ id: string }>;}) {

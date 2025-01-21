@@ -62,7 +62,7 @@ export async function getDataNoQuery({
 
   const data = await res.json();
 
-  // await new Promise((resolve) => setTimeout(resolve, 4000));  
+  // await new Promise((resolve) => setTimeout(resolve, 8000));  
 
   return data.data;
 }

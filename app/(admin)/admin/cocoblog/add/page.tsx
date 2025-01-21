@@ -2,7 +2,7 @@ import Form from "@/app/ui/admin/cocoblog/form";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Tambah Petani",
+  title: "Cocoblog",
 };
 
 export default function Page() {

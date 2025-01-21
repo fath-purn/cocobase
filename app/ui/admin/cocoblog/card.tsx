@@ -69,7 +69,7 @@ export default function Card({
                   alt={data.judul}
                   width={237}
                   height={200}
-                  className="object-cover rounded-lg w-[237px] h-[200px] "
+                  className="object-cover rounded-lg w-full h-[200px] "
                 />
                 <div className="flex items-center justify-center my-3 ml-1 md:ml-0 w-[50%] md:w-full">
                   <div className="w-[90%]">

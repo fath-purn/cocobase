@@ -2,7 +2,7 @@ import Form from "@/app/ui/admin/produksi/form";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Tambah Produksi",
+  title: "Produksi",
 };
 
 export default function Page() {

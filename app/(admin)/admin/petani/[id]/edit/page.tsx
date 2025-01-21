@@ -2,7 +2,7 @@ import Form from "@/app/ui/admin/petani/formUpdate";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Tambah Petani",
+  title: "Petani",
 };
 
 export default async function Page(props: {params: Promise<{ id: string }>;}) {
