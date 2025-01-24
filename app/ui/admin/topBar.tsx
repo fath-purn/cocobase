@@ -28,7 +28,7 @@ const TopBar: React.FC = () => {
           className="border border-gray-500 rounded-full object-cover aspect-square"
         />
         <div className="flex items-center">
-          <p className="text-[#202224]">nama saya</p>
+          <p className="text-[#202224]">Admin Cocobase</p>
           {/* <Icon path={mdiMenuDown} size={1.5} className="w-6" /> */}
         </div>
       </div>

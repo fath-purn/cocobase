@@ -10,7 +10,7 @@ export async function setCookiesToken(token: string) {
       httpOnly: true,
       secure: true,
       // path: "/auth/login",
-      maxAge: 3600,
+      maxAge: 86400,
       sameSite: "strict",
     });
 

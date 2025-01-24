@@ -1,8 +1,6 @@
 "use client";
 import Icon from "@mdi/react";
 import {
-  mdiDeleteOutline,
-  mdiArrowUpBoldBoxOutline,
   mdiTriangleSmallDown,
 } from "@mdi/js";
 import { Produksi } from "@/app/utils/interface";
@@ -29,14 +27,6 @@ export default function Table({ produksiList }: { produksiList: Produksi[] }) {
     };
   }, [isOpen]);
 
-  const handleUpdate = (produksi: Produksi) => {
-    // Fungsi untuk mengupdate data produksi
-  };
-
-  const handleDelete = (produksi: Produksi) => {
-    // Fungsi untuk menghapus data produksi
-  };
-
   const statusList = [
     { value: "", label: "Status" },
     { value: "DIAYAK", label: "Diayak" },
@@ -60,9 +50,9 @@ export default function Table({ produksiList }: { produksiList: Produksi[] }) {
         <thead>
           <tr className="bg-gray-100 grid grid-cols-12">
             <th className="border border-gray-300 p-2 col-span-1">No</th>
-            <th className="border border-gray-300 p-2 col-span-4">Produk</th>
+            <th className="border border-gray-300 p-2 col-span-5">Produk</th>
             <th className="border border-gray-300 p-2 col-span-2">Jumlah</th>
-            <th className="border border-gray-300 p-2 col-span-2">
+            <th className="border border-gray-300 p-2 col-span-4">
               <div className="relative">
                 <button className="w-full" onClick={() => setIsOpen(!isOpen)}>
                   <div className="flex justify-between">
@@ -98,7 +88,6 @@ export default function Table({ produksiList }: { produksiList: Produksi[] }) {
                 )}
               </div>
             </th>
-            <th className="border border-gray-300 p-2 col-span-3">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -113,34 +102,14 @@ export default function Table({ produksiList }: { produksiList: Produksi[] }) {
               <td className="border border-gray-300 p-[6px] text-center col-span-1">
                 {index + 1}
               </td>
-              <td className="border border-gray-300 p-[6px] col-span-4">
+              <td className="border border-gray-300 p-[6px] col-span-5">
                 {produksi.produk}{" "}
               </td>
               <td className="border border-gray-300 p-[6px] text-center col-span-2">
                 {produksi.jumlah}
               </td>
-              <td className="border border-gray-300 p-[6px] text-center col-span-2">
+              <td className="border border-gray-300 p-[6px] text-center col-span-4">
                 {produksi.status}
-              </td>
-              <td className="border border-gray-300 p-[6px] col-span-3">
-                <div className="flex justify-center space-x-2">
-                  <button
-                    className="bg-green-500 hover:bg-green-700 text-white font-bold w-fit p-1 rounded"
-                    onClick={() => handleUpdate(produksi)}
-                  >
-                    <Icon
-                      path={mdiArrowUpBoldBoxOutline}
-                      size={1}
-                      color="#fff"
-                    />
-                  </button>
-                  <button
-                    className="bg-red-500 hover:bg-red-700 text-white font-bold w-fit p-1 rounded"
-                    onClick={() => handleDelete(produksi)}
-                  >
-                    <Icon path={mdiDeleteOutline} size={1} color="#fff" />
-                  </button>
-                </div>
               </td>
             </tr>
           ))}

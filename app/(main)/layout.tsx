@@ -20,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${poppins.className} bg-white text-[#202224]`}>
+      <body className={`${poppins.className} bg-white text-[#202224] scroll-smooth`}>
         <Navbar />
         <div className="relative md:top-[48px] bottom-[48px] md:bottom-0">
           {children}
