@@ -1,6 +1,11 @@
 import { getData } from "@/app/utils/fetchData";
 import Image from "next/image";
 import { Footer, Chat } from "@/app/(main)/page";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Cocoblog",
+};
 
 export default async function Page(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;

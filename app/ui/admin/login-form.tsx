@@ -63,16 +63,6 @@ export default function LoginForm({ thisIsLogin }: { thisIsLogin?: boolean }) {
           </div>
         </div>
         <LoginButton thisIsLogin={thisIsLogin} />
-        <div className="flex h-8 items-end space-x-1">
-          {code !== undefined && (
-            <>
-              <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
-              <p aria-live="polite" className="text-sm text-red-500">
-                {code.message}
-              </p>
-            </>
-          )}
-        </div>
       </div>
     </form>
   );

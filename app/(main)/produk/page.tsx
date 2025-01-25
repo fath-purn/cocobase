@@ -1,6 +1,11 @@
 import { Suspense, lazy } from "react";
 import { SkeletonCard } from "@/app/ui/admin/skeleton/card";
 import { Footer, Chat } from "@/app/(main)/page";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Produk",
+};
 
 const CardProduk = lazy(() => import("@/app/ui/admin/produk/cardMain"));
 

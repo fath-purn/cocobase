@@ -4,11 +4,6 @@ import Search from "@/app/ui/admin/search";
 import { Suspense } from "react";
 
 const TopBar: React.FC = () => {
-  // const [isOpen, setIsOpen] = useState<boolean>(false);
-
-  // const toggleSidebar = () => {
-  //   setIsOpen(!isOpen);
-  // };
 
   return (
     <div className="bg-white items-center flex justify-between py-3 mb-5 md:mb-8 pl-4">
