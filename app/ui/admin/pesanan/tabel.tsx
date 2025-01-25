@@ -15,6 +15,7 @@ import { formDeleteHandler } from "@/app/utils/actions";
 import { getDataNoQuery } from "@/app/utils/fetchData";
 import FormTransaksi from "@/app/ui/admin/pesanan/transaksi";
 import { toast } from "react-toastify";
+import FormUpdate from "@/app/ui/admin/pesanan/formUpdate";
 
 export default function Table({
   currentPage,
@@ -149,16 +150,7 @@ export default function Table({
                     >
                       <Icon path={mdiExpandAll} size={1} color="#fff" />
                     </button>
-                    <Link
-                      href={`/admin/pembeli/${pembeli.id}/edit`}
-                      className="bg-green-500 hover:bg-green-700 text-white font-bold w-fit p-1 rounded"
-                    >
-                      <Icon
-                        path={mdiArrowUpBoldBoxOutline}
-                        size={1}
-                        color="#fff"
-                      />
-                    </Link>
+                    <FormUpdate pembeli={pembeli} />
                     <button
                       className="bg-red-500 hover:bg-red-700 text-white font-bold w-fit p-1 rounded"
                       onClick={() => handleDelete(pembeli.id, "pembeli")}
