@@ -64,7 +64,6 @@ export default function TableUpdate({ id }: { id: string }) {
                 id="image"
                 type="file"
                 name="image"
-                required
               />
               <Icon
                 path={mdiImage}
@@ -73,6 +72,7 @@ export default function TableUpdate({ id }: { id: string }) {
                 className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900"
               />
             </div>
+            <p className="text-gray-600 text-sm mt-1"><span className="text-red-700 text-xl">*</span>Jika tidak ingin mengganti gambar, abaikan saja.</p>
           </div>
           <div>
             <label

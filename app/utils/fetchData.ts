@@ -31,6 +31,7 @@ export async function getData({
   // }
 
   const data = await res.json();
+  // console.log("data", data)
 
   // await new Promise((resolve) => setTimeout(resolve, 4000));  
 
@@ -61,6 +62,8 @@ export async function getDataNoQuery({
   // }
 
   const data = await res.json();
+  // console.log(data);
+  
 
   // await new Promise((resolve) => setTimeout(resolve, 8000));  
 

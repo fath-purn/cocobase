@@ -10,6 +10,7 @@ import {
   mdiViewDashboardOutline,
   mdiStoreOutline,
   mdiCogs,
+  mdiAccount,
 } from "@mdi/js";
 
 // Map of links to display in the side navigation.
@@ -18,6 +19,10 @@ const links = [
   { name: "Dashboard", 
     href: "/admin", 
     icon: mdiViewDashboardOutline 
+  },
+  { name: "Petani", 
+    href: "/admin/petani", 
+    icon: mdiAccount, 
   },
   {
     name: "Produksi",

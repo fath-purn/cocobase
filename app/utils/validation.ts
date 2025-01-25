@@ -15,6 +15,13 @@ export const produksi = z.object({
   status: z.optional(z.enum(["DIAYAK", "DIOVEN", "DISORTIR", "DIKEMAS", "SELESAI"])),
 });
 
+export const transaksi = z.object({
+  id_pembeli: z.string(),
+  id_produk: z.string().min(1, { message: "Pilih produk" }),
+  jumlah: z.string().min(1, { message: "Jumlah harus diisi" }),
+  harga: z.string().min(1, { message: "Harga harus diisi" }),
+});
+
 export const cocoblog = z.object({
   judul: z.string().min(1, { message: "Judul harus diisi" }),
   isi: z.string().min(1, { message: "Deksripsi harus diisi" }),
@@ -24,7 +31,6 @@ export const produk = z.object({
   nama: z.string().min(1, { message: "Judul harus diisi" }),
   deskripsi: z.string().min(1, { message: "Deksripsi harus diisi" }),
   link: z.string().min(1, { message: "Deksripsi harus diisi" }),
-  jumlah: z.string().min(1, { message: "Deksripsi harus diisi" }),
 });
 
 export const statusProduksi = z.object({
@@ -36,32 +42,4 @@ export const produksiUpdate = z.object({
   produk: z.string().min(1, { message: "Nama produk harus diisi" }),
   jumlah: z.string().min(1),
   status: z.enum(["DIAYAK", "DIOVEN", "DISORTIR", "DIKEMAS", "SELESAI"]),
-});
-
-export const artikel = z.object({
-  judul: z.string().min(3),
-  deskripsi: z.string().min(3),
-  menu: z.enum(["sulap_limbah", "olah_pangan", "edukasi"]),
-});
-
-export const kelompok = z.object({
-  nama: z.string().min(3),
-});
-
-export const pengujian = z.object({
-  id_user: z.string(),
-  fat: z.number(),
-  snf: z.number(),
-  protein: z.number(),
-  ph: z.number(),
-  hasil: z.enum(["SangatBaik", "Baik", "Normal", "Buruk", "SangatBuruk"]),
-  message: z.string(),
-});
-
-export const lapak = z.object({
-  nama: z.string(),
-  harga: z.number(),
-  deskripsi: z.string(),
-  kuantiti: z.enum(["Kg", "Liter", "Buah", "Ekor"]),
-  stok: z.number(),
 });

@@ -1,12 +1,6 @@
-// 'use client'
-
 import Table from "@/app/ui/admin/petani/tableDetail";
 import Link from "next/link";
-import Icon from "@mdi/react";
-import { mdiWhatsapp } from "@mdi/js";
-import { useState, useEffect } from "react";
 import { getData } from "@/app/utils/fetchData";
-import { Petani, PetaniDetail, Produksi } from "@/app/utils/interface";
 
 export default async function Page(props: {
   searchParams?: Promise<{
@@ -46,13 +40,6 @@ export default async function Page(props: {
             <p>: {petaniList?.no_hp ?? "Data tidak ditemukan"}</p>
           </div>
         </div>
-        <Link
-          href={`/`}
-          className="flex h-10 items-center rounded-lg bg-green-600 gap-3 px-4 text-sm font-medium text-white transition-colors hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
-        >
-          <Icon path={mdiWhatsapp} size={1} color="white" />
-          <p>Kirim Data</p>
-        </Link>
       </div>
 
         <Table produksiList={petaniList.produksi} />

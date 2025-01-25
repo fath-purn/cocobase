@@ -45,6 +45,11 @@ export interface Produk {
   jumlah: number;
 }
 
+export interface ProdukSelect {
+  id: number;
+  nama: string;
+}
+
 export interface Cocoblog {
   id: number;
   judul: string;
@@ -61,4 +66,25 @@ export interface Kiri {
 export interface Kanan {
   nama: string;
   nilai: number;
+}
+
+export interface Transaksi {
+  id: number;
+  jumlah: number;
+  harga: number;
+  createdAt: string;
+  updatedAt: string;
+  produk: string;
+  total: number;
+}
+
+export interface Pembeli {
+  id: number;
+  id_admin: number;
+  nama: string;
+  alamat: string;
+  no_telp: string;
+  createdAt: string;
+  updatedAt: string;
+  transaksi: Transaksi[];
 }

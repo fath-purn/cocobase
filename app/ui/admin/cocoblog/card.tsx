@@ -62,7 +62,7 @@ export default function Card({
             return (
               <div
                 key={index}
-                className="flex flex-row justify-start md:flex-col bg-white rounded-lg shadow-md mt-3 h-full"
+                className="flex flex-row justify-start md:flex-col w-full bg-white rounded-lg shadow-md mt-3 h-full"
               >
                 <Image
                   src={data.gambar}

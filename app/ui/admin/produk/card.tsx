@@ -25,7 +25,7 @@ export default function Card({
 }) {
   const [produkList, setProdukList] = useState<Produk[]>([]);
   const [totalItems, setTotalItems] = useState<number>(0);
-const [result, setResult] = useState(null);
+  const [result, setResult] = useState(null);
 
   const handleDelete = async (id: number, params: string) => {
       const result = await formDeleteHandler({ id, params });

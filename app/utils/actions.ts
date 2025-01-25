@@ -121,7 +121,7 @@ export async function formSubmitHandlerPetani(
 
     if (code && "success" in code && code.success === true) {
       toast.success(code.message);
-      if (code.params === "produksi/status") {
+      if (code.params === "produksi/status" || code.params === "pembeli" || code.params === "transaksi") {
         return Promise.resolve(code);
       }
 

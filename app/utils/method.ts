@@ -1,15 +1,12 @@
 "use server";
 
 import {
-  artikel,
   cocoblog,
-  kelompok,
-  lapak,
-  pengujian,
   petani,
   produk,
   produksi,
   statusProduksi,
+  transaksi,
 } from "@/app/utils/validation";
 import { cookies } from "next/headers";
 
@@ -53,6 +50,34 @@ function getValidasiDanBody(params: string, data: any) {
           no_hp: data.telepon,
         },
       };
+    case "pembeli":
+      return {
+        validasi: petani.safeParse({
+          nama: data.nama,
+          alamat: data.alamat,
+          telepon: data.telepon,
+        }),
+        body: {
+          nama: data.nama,
+          alamat: data.alamat,
+          no_telp: data.telepon,
+        },
+      };
+    case "transaksi":
+      return {
+        validasi: transaksi.safeParse({
+          id_pembeli: data.id_pembeli,
+          id_produk: data.id_produk,
+          jumlah: data.jumlah,
+          harga: data.harga,
+        }),
+        body: {
+          id_pembeli: data.id_pembeli,
+          id_produk: data.id_produk,
+          jumlah: data.jumlah,
+          harga: data.harga,
+        },
+      };
     case "produksi":
       return {
         validasi: produksi.safeParse({
@@ -86,15 +111,16 @@ function getValidasiDanBody(params: string, data: any) {
         validasi: cocoblog.safeParse({
           judul: data.judul,
           isi: data.isi,
-        })}
+        }),
+      };
     case "produk":
       return {
         validasi: produk.safeParse({
           nama: data.nama,
           deskripsi: data.deskripsi,
           link: data.link,
-          jumlah: data.jumlah,
-        })}
+        }),
+      };
     default:
       throw new Error(`Tidak ada validasi untuk ${params}`);
   }
@@ -151,20 +177,25 @@ export const POSTFILE = async (_provider: string, data: any) => {
 
   let formData = new FormData();
 
+  if (data.image.size !== 0) {
+    formData.append(`image`, data.image);
+  } else if (data.linkGambar) {
+    formData.append("linkGambar", "linkgambar");
+  } else {
+    formData.append("linkGambar", "linkgambar");
+  }
+
   // Handle different cases
   switch (params) {
     case "cocoblog":
-      formData.append(`image`, data.image);
       formData.append("judul", data.judul);
       formData.append("isi", data.isi);
       break;
 
     case "produk":
-      formData.append(`image`, data.image);
       formData.append("nama", data.nama);
       formData.append("deskripsi", data.deskripsi);
       formData.append("link", data.link);
-      formData.append("jumlah", data.jumlah);
       break;
 
     default:
@@ -188,6 +219,7 @@ export const POSTFILE = async (_provider: string, data: any) => {
     const dataJson = await res.json();
 
     console.log(url);
+    console.log("image", data.image.size)
     console.log("res:", dataJson);
 
     if (!res) {
