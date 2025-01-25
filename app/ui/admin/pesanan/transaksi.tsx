@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Icon from "@mdi/react";
-import { mdiMapMarker, mdiAccount, mdiCounter, mdiCash} from "@mdi/js";
+import { mdiAccount, mdiCounter, mdiCash} from "@mdi/js";
 import { Button } from "../button";
 import { useFormStatus } from "react-dom";
 import { formSubmitHandlerPetani } from "@/app/utils/actions";

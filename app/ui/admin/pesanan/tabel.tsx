@@ -2,12 +2,10 @@
 import Icon from "@mdi/react";
 import {
   mdiDeleteOutline,
-  mdiArrowUpBoldBoxOutline,
   mdiExpandAll,
   mdiRefresh,
 } from "@mdi/js";
 import { Pembeli, ProdukSelect, Transaksi } from "@/app/utils/interface";
-import Link from "next/link";
 import { getData } from "@/app/utils/fetchData";
 import { useState, useEffect } from "react";
 import Pagination from "@/app/ui/pagination";

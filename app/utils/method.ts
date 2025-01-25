@@ -31,7 +31,7 @@ export const DELETE = async (id: number, params: string) => {
 
     return code;
   } catch (error) {
-    return { status: "error", message: "Server Error" };
+    return { status: "error", message: "Server Error", err: error };
   }
 };
 
@@ -171,7 +171,7 @@ export const POSTFILE = async (_provider: string, data: any) => {
   console.log("data", data);
 
   const { id_update, params } = data;
-  const { validasi, body } = getValidasiDanBody(params, data);
+  const { validasi, } = getValidasiDanBody(params, data);
 
   console.log(validasi.error?.issues, "hmm bisa gasihh");
 

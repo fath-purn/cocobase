@@ -1,10 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
-import Icon from "@mdi/react";
-import { mdiArrowRight } from "@mdi/js";
 import Pagination from "@/app/ui/pagination";
 import { getData } from "@/app/utils/fetchData";
-import { Cocoblog, Produk } from "@/app/utils/interface";
+import { Produk } from "@/app/utils/interface";
 
 export default async function Card({
   currentPage,

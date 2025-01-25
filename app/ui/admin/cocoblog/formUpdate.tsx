@@ -1,7 +1,6 @@
 "use client";
 import Icon from "@mdi/react";
 import { mdiImage, mdiTimerSand, mdiCounter } from "@mdi/js";
-import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 import { Button } from "../button";
 import { useFormStatus } from "react-dom";
 import { formSubmitHandlerFile } from "@/app/utils/actions";

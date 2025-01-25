@@ -2,8 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Icon from "@mdi/react";
-import { mdiMapMarker, mdiAccount, mdiPhone, mdiMap } from "@mdi/js";
-import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
+import { mdiMapMarker, mdiAccount, mdiPhone, } from "@mdi/js";
 import { Button } from "../button";
 import { useFormStatus } from "react-dom";
 import { formSubmitHandlerPetani } from "@/app/utils/actions";

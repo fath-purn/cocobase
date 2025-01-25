@@ -28,7 +28,7 @@ export async function authenticate(
     }
   } catch (error) {
     toast.error("Login gagal!");
-    return { success: false, message: "Authentication failed" };
+    return { success: false, message: "Authentication failed", err: error };
   }
 }
 

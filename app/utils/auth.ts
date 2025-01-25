@@ -2,7 +2,6 @@ import {
   setCookiesToken,
   removeCookiesToken,
 } from "@/app/utils/cookies";
-import { redirect } from "next/navigation";
 import { z } from "zod";
 import { NextResponse } from 'next/server';
 

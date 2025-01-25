@@ -30,13 +30,11 @@ export default async function Page(props: {
         currentPage={currentPage}
         search={search}
         limit={limit}
-        admin={false}
       />
       <Cocoblog
         currentPage={currentPage}
         search={search}
         limit={limit}
-        admin={false}
       />
       <Footer />
     </main>
@@ -259,12 +257,10 @@ const Shop = ({
   currentPage,
   limit,
   search,
-  admin = true,
 }: {
   limit: number;
   currentPage: number;
   search: string;
-  admin?: boolean;
 }) => {
   return (
     <section
@@ -299,12 +295,10 @@ const Cocoblog = ({
   currentPage,
   limit,
   search,
-  admin = true,
 }: {
   limit: number;
   currentPage: number;
   search: string;
-  admin?: boolean;
 }) => {
   return (
     <section

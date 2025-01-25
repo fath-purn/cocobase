@@ -3,7 +3,6 @@
 import { useState, useEffect, useActionState } from "react";
 import Icon from "@mdi/react";
 import { mdiAccount, mdiTimerSand, mdiCounter } from "@mdi/js";
-import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 import { Button } from "../button";
 import { useFormStatus } from "react-dom";
 import { formSubmitHandlerPetani } from "@/app/utils/actions";
