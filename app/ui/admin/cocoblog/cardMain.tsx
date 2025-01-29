@@ -50,7 +50,6 @@ export default async function Card({
                   <h3 className="text-black text-xl font-medium mb-3">
                     {data.judul}
                   </h3>
-                  <p className="text-black text-sm line-clamp-3">{data.isi}</p>
                 </div>
               </div>
 

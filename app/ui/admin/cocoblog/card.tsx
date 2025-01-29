@@ -76,9 +76,6 @@ export default function Card({
                     <h3 className="text-black text-xl font-medium mb-3">
                       {data.judul}
                     </h3>
-                    <p className="text-black text-sm line-clamp-3">
-                      {data.isi}
-                    </p>
                   </div>
                 </div>
                 <div className="mt-auto flex justify-center mb-3">
@@ -90,7 +87,7 @@ export default function Card({
                     >
                       <Icon path={mdiExpandAll} size={1} color="#fff" />
                     </Link>
-                    <Link
+                    {/* <Link
                       className="bg-green-500 hover:bg-green-700 text-white font-bold w-fit p-1 rounded"
                       href={`/admin/cocoblog/${data.id}/edit`}
                     >
@@ -99,7 +96,7 @@ export default function Card({
                         size={1}
                         color="#fff"
                       />
-                    </Link>
+                    </Link> */}
                     <button
                       className="bg-red-500 hover:bg-red-700 text-white font-bold w-fit p-1 rounded"
                       onClick={() => handleDelete(data.id, "cocoblog")}

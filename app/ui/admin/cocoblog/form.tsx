@@ -6,10 +6,63 @@ import { useFormStatus } from "react-dom";
 import { formSubmitHandlerFile } from "@/app/utils/actions";
 import Link from "next/link";
 import { useActionState, useState, useEffect } from "react";
+import "@uiw/react-md-editor/markdown-editor.css";
+import "@uiw/react-markdown-preview/markdown.css";
+import dynamic from "next/dynamic";
+
+const MDEditor = dynamic(
+  () => import("@uiw/react-md-editor").then((mod) => mod.default),
+  { ssr: false }
+);
 
 export default function LoginForm() {
   const [code, action] = useActionState(formSubmitHandlerFile, undefined);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [value, setValue] = useState<string | undefined>("");
+  const [uploadingImage, setUploadingImage] = useState(false);
+
+  const handleImageUpload = async (file: File): Promise<string> => {
+    try {
+      setUploadingImage(true);
+      const formData = new FormData();
+      formData.append("image", file);
+      
+      const token = localStorage.getItem("token");
+
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cocoblog/upload-gambar`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+      return data.data.gambar.url;
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      throw error;
+    } finally {
+      setUploadingImage(false);
+    }
+  };
+
+  const onImagePaste = async (dataTransfer: DataTransfer): Promise<string> => {
+    const files = dataTransfer.files;
+    if (files.length > 0) {
+      const file = files[0];
+      if (file.type.startsWith("image/")) {
+        try {
+          const imageUrl = await handleImageUpload(file);
+          return imageUrl;
+        } catch (error) {
+          console.error("Error handling pasted image:", error);
+          return "";
+        }
+      }
+    }
+    return "";
+  };
 
   useEffect(() => {
     if (code !== undefined && code.success === false) {
@@ -86,33 +139,48 @@ export default function LoginForm() {
             )}
           </div>
           <div>
-            <label
-              className="mb-3 mt-5 block text-xs font-medium text-gray-900"
-              htmlFor="isi"
-            >
-              Deskripsi
-            </label>
-            <div className="relative">
-              <textarea
-                className={`peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500 ${
-                  errors.isi ? "border-red-500" : ""
-                }`}
-                id="isi"
-                name="isi"
-                placeholder="Deskripsi"
-                required
-              />
-              <Icon
-                path={mdiCounter}
-                size={1}
-                color="black"
-                className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900"
-              />
-            </div>
-            {errors.isi && (
-              <p className="text-red-500 text-sm mt-1">{errors.isi}</p>
+          <label
+            className="mb-3 mt-5 block text-xs font-medium text-gray-900"
+            htmlFor="isi"
+          >
+            Deskripsi
+          </label>
+          <div className="relative" data-color-mode="light">
+            <MDEditor
+              value={value}
+              onChange={(val) => setValue(val)}              
+              className={`${errors.isi ? "border-red-500" : ""}`}
+              height={200}
+              onPaste={async (event) => {
+                event.preventDefault();
+                const imageUrl = await onImagePaste(event.clipboardData);
+                if (imageUrl) {
+                  const imageMarkdown = `![image](${imageUrl})`;
+                  const newValue = value ? `${value}\n${imageMarkdown}` : imageMarkdown;
+                  setValue(newValue);
+                }
+              }}
+              onDrop={async (event) => {
+                event.preventDefault();
+                const imageUrl = await onImagePaste(event.dataTransfer);
+                if (imageUrl) {
+                  const imageMarkdown = `![image](${imageUrl})`;
+                  const newValue = value ? `${value}\n${imageMarkdown}` : imageMarkdown;
+                  setValue(newValue);
+                }
+              }}
+            />
+            <input type="hidden" name="isi" value={value || ""} />
+            {uploadingImage && (
+              <div className="absolute inset-0 bg-white/50 flex items-center justify-center">
+                <p>Mengupload gambar...</p>
+              </div>
             )}
           </div>
+          {errors.isi && (
+            <p className="text-red-500 text-sm mt-1">{errors.isi}</p>
+          )}
+        </div>
         </div>
         <input
           id="params"

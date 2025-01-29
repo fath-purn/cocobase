@@ -2,9 +2,18 @@ import { getData } from "@/app/utils/fetchData";
 import Image from "next/image";
 import { Footer, Chat } from "@/app/(main)/page";
 import { Metadata } from "next";
+import DOMPurify from 'isomorphic-dompurify';
 
 export const metadata: Metadata = {
   title: "Cocoblog",
+};
+
+// Fungsi untuk sanitize HTML
+const sanitizeHtml = (html: string) => {
+  return DOMPurify.sanitize(html, {
+    ADD_TAGS: ['iframe'], // Jika perlu support iframe
+    ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling'] // Atribut untuk iframe
+  });
 };
 
 export default async function Page(props: { params: Promise<{ id: string }> }) {
@@ -31,7 +40,12 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
           />
           <div className="mt-5 mb-10">
             <h1 className="text-2xl text-center font-semibold">{data.judul}</h1>
-            <p className="mt-2">{data.isi}</p>
+            <article 
+              className="prose prose-slate max-w-none mt-2"
+              dangerouslySetInnerHTML={{ 
+                __html: sanitizeHtml(data.isi) 
+              }}
+            />
           </div>
         </div>
       )}
