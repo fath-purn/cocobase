@@ -27,15 +27,19 @@ export default async function Page(props: {
 
   return (
     <div className="mr-5 p-10 md:mr-8 bg-white rounded-lg shadow-lg">
-      <h1 className="text-3xl font-bold mb-4">{petaniList?.nama ?? "Data tidak ditemukan"} id: {id} </h1>
+      <h1 className="text-3xl font-bold mb-4">{petaniList?.nama ?? "Data tidak ditemukan"} </h1>
 
       <div className="flex justify-between items-end mb-4">
         <div className="flex gap-3">
           <div>
+            <p>RT</p>
+            <p>RW</p>
             <p>alamat</p>
             <p>telepon</p>
           </div>
           <div>
+            <p>: {petaniList?.RT ?? "Data tidak ditemukan"}</p>
+            <p>: {petaniList?.RW ?? "Data tidak ditemukan"}</p>
             <p>: {petaniList?.alamat ?? "Data tidak ditemukan" }</p>
             <p>: {petaniList?.no_hp ?? "Data tidak ditemukan"}</p>
           </div>

@@ -26,6 +26,8 @@ export interface Petani {
   nama: string;
   alamat: string;
   no_hp: string;
+  RT: string;
+  RW: string;
 }
 
 export interface PetaniDetail {
@@ -33,6 +35,8 @@ export interface PetaniDetail {
   nama: string;
   alamat: string;
   no_hp: string;
+  RT: string;
+  RW: string;
   produksi: Produksi[];
 }
 
@@ -87,4 +91,14 @@ export interface Pembeli {
   createdAt: string;
   updatedAt: string;
   transaksi: Transaksi[];
+}
+
+export interface ChartSchema {
+  id: number;
+  id_admin: number;
+  minggu_ke: number;
+  bulan: number;
+  tahun: number;
+  jumlah_total: number;
+  harga_rata: number;
 }

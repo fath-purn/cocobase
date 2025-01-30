@@ -1,17 +1,19 @@
 'use client'
 
-import React, { useState, useMemo } from 'react';
-import { Line } from 'react-chartjs-2';
-import {
-  Chart as ChartJS,
+import React, { useState, useMemo, useEffect } from 'react';
+import { Chart as ChartJS, 
   CategoryScale,
   LinearScale,
   PointElement,
   LineElement,
+  BarElement,
   Title,
   Tooltip,
-  Legend,
+  Legend
 } from 'chart.js';
+import { Chart } from 'react-chartjs-2';
+import { getDataNoQuery } from '@/app/utils/fetchData';
+import { ChartSchema } from '@/app/utils/interface';
 
 // Register Chart.js components
 ChartJS.register(
@@ -19,93 +21,49 @@ ChartJS.register(
   LinearScale,
   PointElement,
   LineElement,
+  BarElement,
   Title,
   Tooltip,
   Legend
 );
 
 const LineChart = () => {
-  // Data for the chart with dates
-  const rawData = [
-    // Data untuk tahun 2022
-    { date: '2022-01-01', sales: 50 },
-    { date: '2022-01-15', sales: 55 },
-    { date: '2022-01-31', sales: 60 },
-    { date: '2022-02-01', sales: 65 },
-    { date: '2022-02-15', sales: 70 },
-    { date: '2022-02-28', sales: 60 },
-    { date: '2022-03-01', sales: 58 },
-    { date: '2022-03-15', sales: 50 },
-    { date: '2022-03-31', sales: 45 },
-    { date: '2022-04-01', sales: 50 },
-    { date: '2022-04-15', sales: 55 },
-    { date: '2022-04-30', sales: 60 },
-    { date: '2022-05-01', sales: 70 },
-    { date: '2022-05-15', sales: 65 },
-    { date: '2022-05-31', sales: 55 },
-    { date: '2022-06-01', sales: 50 },
-    { date: '2022-06-15', sales: 75 },
-    { date: '2022-06-30', sales: 80 },
-    { date: '2022-07-01', sales: 90 },
-    { date: '2022-07-15', sales: 95 },
-    { date: '2022-07-31', sales: 85 },
-    { date: '2022-08-01', sales: 95 },
-    { date: '2022-08-15', sales: 100 },
-    { date: '2022-08-31', sales: 105 },
-    { date: '2022-09-01', sales: 110 },
-    { date: '2022-09-15', sales: 90 },
-    { date: '2022-09-30', sales: 85 },
-    { date: '2022-10-01', sales: 80 },
-    { date: '2022-10-15', sales: 70 },
-    { date: '2022-10-31', sales: 65 },
-    { date: '2022-11-01', sales: 75 },
-    { date: '2022-11-15', sales: 85 },
-    { date: '2022-11-30', sales: 90 },
-    { date: '2022-12-01', sales: 100 },
-    { date: '2022-12-15', sales: 105 },
-    { date: '2022-12-31', sales: 110 },
+  const [rawData, setRawData] = useState<ChartSchema[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-    // Data untuk tahun 2023
-    { date: '2023-01-01', sales: 120 },
-    { date: '2023-01-15', sales: 115 },
-    { date: '2023-01-31', sales: 110 },
-    { date: '2023-02-01', sales: 100 },
-    { date: '2023-02-15', sales: 95 },
-    { date: '2023-02-28', sales: 90 },
-    { date: '2023-03-01', sales: 80 },
-    { date: '2023-03-15', sales: 85 },
-    { date: '2023-03-31', sales: 70 },
-    { date: '2023-04-01', sales: 75 },
-    { date: '2023-04-15', sales: 70 },
-    { date: '2023-04-30', sales: 65 },
-    { date: '2023-05-01', sales: 90 },
-    { date: '2023-05-15', sales: 95 },
-    { date: '2023-05-31', sales: 100 },
-    { date: '2023-06-01', sales: 110 },
-    { date: '2023-06-15', sales: 120 },
-    { date: '2023-06-30', sales: 125 },
-    { date: '2023-07-01', sales: 150 },
-    { date: '2023-07-15', sales: 140 },
-    { date: '2023-07-31', sales: 130 },
-    { date: '2023-08-01', sales: 125 },
-    { date: '2023-08-15', sales: 115 },
-    { date: '2023-08-31', sales: 110 },
-    { date: '2023-09-01', sales: 120 },
-    { date: '2023-09-15', sales: 110 },
-    { date: '2023-09-30', sales: 105 },
-    { date: '2023-10-01', sales: 100 },
-    { date: '2023-10-15', sales: 95 },
-    { date: '2023-10-31', sales: 90 },
-    { date: '2023-11-01', sales: 85 },
-    { date: '2023-11-15', sales: 80 },
-    { date: '2023-11-30', sales: 75 },
-    { date: '2023-12-01', sales: 70 },
-    { date: '2023-12-15', sales: 80 },
-    { date: '2023-12-31', sales: 90 },
-  ];
+  useEffect(() => {
+    let isMounted = true;
 
-  const [selectedYear, setSelectedYear] = useState('2023'); // Default to 2023
-  const [selectedMonth, setSelectedMonth] = useState('all'); // Default to "All Months"
+    const fetchData = async () => {
+      try {
+        setIsLoading(true);
+        const data = await getDataNoQuery({ path: '/scrap' });
+        if (isMounted) {
+          setRawData(data.scrap);
+          setError(null);
+        }
+      } catch (err) {
+        if (isMounted) {
+          setError('Gagal mengambil data');
+          console.error('Error fetching data:', err);
+        }
+      } finally {
+        if (isMounted) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    fetchData();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const [selectedYear, setSelectedYear] = useState('');
+  const [selectedMonth, setSelectedMonth] = useState('all');
 
   // Function to convert month number to month name
   const monthNames = [
@@ -113,63 +71,86 @@ const LineChart = () => {
     'July', 'August', 'September', 'October', 'November', 'December'
   ];
 
-  // Get unique years from rawData
-    rawData.map(item => item.date.split('-')[0])
-    .filter((year, index, self) => self.indexOf(year) === index);
-
   const uniqueYears = useMemo(() => {
-    return [...new Set(rawData.map(item => item.date.split('-')[0]))];
+    return [...new Set(rawData.map(item => item.tahun.toString()))];
   }, [rawData]);
 
-  // Get unique months from the filtered data
   const uniqueMonths = useMemo(() => {
     const months = rawData
-      .filter(item => item.date.split('-')[0] === selectedYear)
-      .map(item => item.date.split('-')[1]);
+      .filter(item => item.tahun.toString() === selectedYear)
+      .map(item => item.bulan.toString());
     return [...new Set(months)];
   }, [rawData, selectedYear]);
 
-  // Filter data based on selected year and month
   const filteredData = useMemo(() => {
     return rawData.filter(item => {
-      const yearMatch = item.date.split('-')[0] === selectedYear;
+      const yearMatch = item.tahun.toString() === selectedYear;
       if (selectedMonth === 'all') {
-        return yearMatch; // Return all data for the selected year
+        return yearMatch;
       } else {
-        const monthMatch = item.date.split('-')[1] === selectedMonth;
-        return yearMatch && monthMatch; // Return data for the selected year and month
+        const monthMatch = item.bulan.toString() === selectedMonth;
+        return yearMatch && monthMatch;
       }
     });
   }, [selectedYear, selectedMonth]);
 
-  // Prepare data for the chart
   const data = selectedMonth === 'all' ? {
-    labels: uniqueMonths.map(month => monthNames[parseInt(month) - 1]), // Convert month number to name
+    labels: uniqueMonths.map(month => monthNames[parseInt(month) - 1]),
     datasets: [
       {
-        label: 'Monthly Sales',
+        type: 'bar' as const,
+        label: 'Total Penjualan per Bulan',
         data: uniqueMonths.map(month => 
-          filteredData.filter(item => item.date.split('-')[1] === month)
-          .reduce((acc, item) => acc + item.sales, 0)
+          filteredData
+            .filter(item => item.bulan.toString() === month)
+            .reduce((acc, item) => acc + item.jumlah_total, 0)
         ),
-        borderColor: 'rgba(75, 192, 192, 1)',
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 2,
-        tension: 0.4, // Smooth line
+        yAxisID: 'y'
       },
-    ],
+      {
+        type: 'bar' as const,
+        label: 'Rata-rata Harga per Bulan',
+        data: uniqueMonths.map(month => {
+          const monthData = filteredData.filter(item => item.bulan.toString() === month);
+          return monthData.reduce((acc, item) => acc + item.harga_rata, 0) / monthData.length;
+        }),
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        borderColor: 'rgba(255, 99, 132, 1)',
+        borderWidth: 2,
+        yAxisID: 'y1'
+      }
+    ]
   } : {
-    labels: filteredData.map(item => item.date),
+    labels: filteredData
+      .sort((a, b) => a.minggu_ke - b.minggu_ke)
+      .map(item => `Minggu ${item.minggu_ke}`),
     datasets: [
       {
-        label: 'Sales',
-        data: filteredData.map(item => item.sales),
-        borderColor: 'rgba(75, 192, 192, 1)',
+        type: 'bar' as const,
+        label: 'Total Penjualan per Minggu',
+        data: filteredData
+          .sort((a, b) => a.minggu_ke - b.minggu_ke)
+          .map(item => item.jumlah_total),
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 2,
-        tension: 0.4, // Smooth line
+        yAxisID: 'y'
       },
-    ],
+      {
+        type: 'bar' as const,
+        label: 'Harga Rata-rata per Minggu',
+        data: filteredData
+          .sort((a, b) => a.minggu_ke - b.minggu_ke)
+          .map(item => item.harga_rata),
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        borderColor: 'rgba(255, 99, 132, 1)',
+        borderWidth: 2,
+        yAxisID: 'y1'
+      }
+    ]
   };
 
   // Options for the chart
@@ -186,14 +167,59 @@ const LineChart = () => {
     },
     scales: {
       y: {
-        beginAtZero: true,
+        type: 'linear' as const,
+        display: true,
+        position: 'left' as const,
+        title: {
+          display: true,
+          text: 'Total Penjualan'
+        }
       },
+      y1: {
+        type: 'linear' as const,
+        display: true,
+        position: 'right' as const,
+        title: {
+          display: true,
+          text: 'Harga Rata-rata'
+        },
+        grid: {
+          drawOnChartArea: false,
+        },
+      },
+      x: {
+        stacked: false
+      }
     },
   };
 
+  useEffect(() => {
+    if (uniqueYears.length > 0 && selectedYear === '') {
+      setSelectedYear(uniqueYears[0]);
+    }
+  }, [uniqueYears, selectedYear]);
+
+  // Jika data belum siap, tampilkan loading
+  if (isLoading) {
+    return <div>Memuat data...</div>;
+  }
+
+  // Jika terjadi error, tampilkan pesan error
+  if (error) {
+    return <div style={{color: 'red'}}>{error}</div>;
+  }
+
+  // Jika tidak ada data, tampilkan pesan
+  if (rawData.length === 0) {
+    return <div>Tidak ada data tersedia</div>;
+  }
+
   return (
     <div>
-      <select value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)}>
+      <select 
+        value={selectedYear} 
+        onChange={(e) => setSelectedYear(e.target.value)}
+      >
         {uniqueYears.map(year => (
           <option key={year} value={year}>{year}</option>
         ))}
@@ -204,7 +230,7 @@ const LineChart = () => {
           <option key={month} value={month}>{monthNames[parseInt(month) - 1]}</option>
         ))}
       </select>
-      <Line data={data} options={options} />
+      <Chart type='bar' data={data} options={options} />
     </div>
   );
 };

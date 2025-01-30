@@ -43,11 +43,15 @@ function getValidasiDanBody(params: string, data: any) {
           nama: data.nama,
           alamat: data.alamat,
           telepon: data.telepon,
+          RT: data.RT,
+          RW: data.RW,
         }),
         body: {
           nama: data.nama,
           alamat: data.alamat,
           no_hp: data.telepon,
+          RT: data.RT,
+          RW: data.RW,
         },
       };
     case "pembeli":

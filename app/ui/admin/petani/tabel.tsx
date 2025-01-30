@@ -49,6 +49,8 @@ export default function Table({
               nama: "Tidak Ditemukan",
               alamat: "Tidak Ditemukan",
               no_hp: "Tidak Ditemukan",
+              RT: "Tidak Ditemukan",
+              RW: "Tidak Ditemukan",
             },
           ]);
         } else {
@@ -63,6 +65,8 @@ export default function Table({
             nama: "Tidak Ditemukan",
             alamat: "Tidak Ditemukan",
             no_hp: "Tidak Ditemukan",
+            RT: "Tidak Ditemukan",
+            RW: "Tidak Ditemukan",
           },
         ]);
       }
@@ -77,6 +81,8 @@ export default function Table({
           <tr className="bg-gray-100">
             <th className="border border-gray-300 p-2">No</th>
             <th className="border border-gray-300 p-2">Nama</th>
+            <th className="border border-gray-300 p-2">RT</th>
+            <th className="border border-gray-300 p-2">RW</th>
             <th className="border border-gray-300 p-2">Alamat</th>
             <th className="border border-gray-300 p-2">Telepon</th>
             <th className="border border-gray-300 p-2">Action</th>
@@ -94,6 +100,8 @@ export default function Table({
                 {index + 1}
               </td>
               <td className="border border-gray-300 p-[6px]">{petani.nama}</td>
+              <td className="border border-gray-300 p-[6px] text-center">{petani.RT}</td>
+              <td className="border border-gray-300 p-[6px] text-center">{petani.RW}</td>
               <td className="border border-gray-300 p-[6px]">
                 {petani.alamat && petani.alamat.length > 30
                   ? petani.alamat.slice(0, 30) + "..."
