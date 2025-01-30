@@ -31,6 +31,8 @@ export default function TableUpdate({ id }: { id: string }) {
               nama: "Tidak Ditemukan",
               alamat: "Tidak Ditemukan",
               no_hp: "Tidak Ditemukan",
+              RT: "Tidak Ditemukan",
+              RW: "Tidak Ditemukan",
             },
           ]);
         } else {
@@ -47,9 +49,11 @@ export default function TableUpdate({ id }: { id: string }) {
         setPetaniList([
           {
             id: 0,
-            nama: "Tidak Ditemukan",
-            alamat: "Tidak Ditemukan",
-            no_hp: "Tidak Ditemukan",
+              nama: "Tidak Ditemukan",
+              alamat: "Tidak Ditemukan",
+              no_hp: "Tidak Ditemukan",
+              RT: "Tidak Ditemukan",
+              RW: "Tidak Ditemukan",
           },
         ]);
       }

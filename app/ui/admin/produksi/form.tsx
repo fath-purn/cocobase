@@ -29,6 +29,8 @@ export default function LoginForm() {
               nama: "Tidak Ditemukan",
               alamat: "Tidak Ditemukan",
               no_hp: "Tidak Ditemukan",
+              RT: "Tidak Ditemukan",
+              RW: "Tidak Ditemukan",
             },
           ]);
         } else {
@@ -39,9 +41,11 @@ export default function LoginForm() {
         setPetaniList([
           {
             id: 0,
-            nama: "Tidak Ditemukan",
-            alamat: "Tidak Ditemukan",
-            no_hp: "Tidak Ditemukan",
+              nama: "Tidak Ditemukan",
+              alamat: "Tidak Ditemukan",
+              no_hp: "Tidak Ditemukan",
+              RT: "Tidak Ditemukan",
+              RW: "Tidak Ditemukan",
           },
         ]);
       }
