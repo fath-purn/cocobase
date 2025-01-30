@@ -34,8 +34,8 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
           <Image
             src={data.gambar}
             alt={data.judul}
-            width={237}
-            height={500}
+            width={1200}
+            height={1200}
             className="object-cover rounded-lg w-full max-h-[400px]"
           />
           <div className="mt-5 mb-10">

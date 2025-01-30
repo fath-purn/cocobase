@@ -41,8 +41,8 @@ export default async function Card({
               <Image
                 src={data.gambar}
                 alt={data.judul}
-                width={237}
-                height={200}
+                width={500}
+                height={500}
                 className="object-cover rounded-lg w-full h-[200px] "
               />
               <div className="flex justify-center my-3 ml-1 md:ml-0 w-[50%] md:w-full">
