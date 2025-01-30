@@ -152,8 +152,23 @@ export default function LoginForm() {
               className={`${errors.isi ? "border-red-500" : ""}`}
               height={200}
               onPaste={async (event) => {
+                const clipboardData = event.clipboardData;
+                const text = clipboardData.getData('text/plain');
+                
+                // Jika ada teks biasa yang di-paste
+                if (text) {
+                  event.preventDefault();
+                  const cursorPosition = (event.target as HTMLTextAreaElement).selectionStart;
+                  const newValue = value 
+                    ? value.slice(0, cursorPosition) + text + value.slice(cursorPosition)
+                    : text;
+                  setValue(newValue);
+                  return;
+                }
+
+                // Handle paste gambar seperti sebelumnya
                 event.preventDefault();
-                const imageUrl = await onImagePaste(event.clipboardData);
+                const imageUrl = await onImagePaste(clipboardData);
                 if (imageUrl) {
                   const imageMarkdown = `![image](${imageUrl})`;
                   const newValue = value ? `${value}\n${imageMarkdown}` : imageMarkdown;
