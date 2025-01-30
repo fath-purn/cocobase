@@ -9,9 +9,10 @@ import { Chart as ChartJS,
   BarElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  BarController
 } from 'chart.js';
-import { Chart } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 import { getDataNoQuery } from '@/app/utils/fetchData';
 import { ChartSchema } from '@/app/utils/interface';
 
@@ -22,6 +23,7 @@ ChartJS.register(
   PointElement,
   LineElement,
   BarElement,
+  BarController,
   Title,
   Tooltip,
   Legend
@@ -230,7 +232,7 @@ const LineChart = () => {
           <option key={month} value={month}>{monthNames[parseInt(month) - 1]}</option>
         ))}
       </select>
-      <Chart type='bar' data={data} options={options} />
+      <Bar data={data} options={options} />
     </div>
   );
 };
