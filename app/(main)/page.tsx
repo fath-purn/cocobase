@@ -4,6 +4,9 @@ import { Suspense, lazy } from "react";
 import { SkeletonCard } from "@/app/ui/admin/skeleton/card";
 import Icon from "@mdi/react";
 import { mdiWhatsapp } from "@mdi/js";
+import imageHome from "@/public/home.png";
+import imageNderes from "@/public/nderes.png";
+import imageWajan from "@/public/wajan.png";
 
 const CardArtikel = lazy(() => import("@/app/ui/admin/cocoblog/cardMain"));
 const CardShop = lazy(() => import("@/app/ui/admin/produk/cardMain"));
@@ -87,10 +90,10 @@ const Home = () => {
         </div>
         <div className="">
           <Image
-            src={"https://dummyimage.com/600x400/000000/73769e"}
+            src={imageHome}
             alt="logo"
-            width={150}
-            height={50}
+            width={1000}
+            height={638}
             className="w-full h-full"
           />
         </div>
@@ -116,50 +119,50 @@ const About = () => {
         <div className="flex w-full gap-3">
           <div className="w-full">
             <Image
-              src={"https://dummyimage.com/600x400/000000/73769e"}
+              src={"https://images.unsplash.com/photo-1537191072641-5e19cc173c6a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8Y29jb251dCUyMHRyZWV8ZW58MHx8MHx8fDA%3D"}
               alt="logo"
-              width={150}
+              width={400}
               height={300}
-              className="w-full rounded-xl shadow mb-3 max-h-24"
+              className="w-full rounded-xl shadow mb-3 h-24 object-cover"
             />
             <Image
-              src={"https://dummyimage.com/600x400/000000/73769e"}
+              src={"https://images.unsplash.com/photo-1564490292125-2e3c78a0ef44?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Y29jb251dCUyMHRyZWV8ZW58MHx8MHx8fDA%3D"}
               alt="logo"
-              width={150}
-              height={100}
-              className="w-full rounded-xl shadow min-h-96"
-            />
-          </div>
-          <div className="w-full">
-            <Image
-              src={"https://dummyimage.com/600x400/000000/73769e"}
-              alt="logo"
-              width={150}
-              height={10}
-              className="w-full rounded-xl shadow mb-3 h-60"
-            />
-            <Image
-              src={"https://dummyimage.com/600x400/000000/73769e"}
-              alt="logo"
-              width={150}
-              height={10}
-              className="w-full rounded-xl shadow h-60"
+              width={400}
+              height={380}
+              className="w-full rounded-xl shadow h-96 object-cover"
             />
           </div>
           <div className="w-full">
             <Image
-              src={"https://dummyimage.com/600x400/000000/73769e"}
+              src={imageNderes}
               alt="logo"
-              width={150}
-              height={400}
-              className="w-full rounded-xl shadow mb-3 min-h-96"
+              width={340}
+              height={240}
+              className="w-full rounded-xl shadow mb-3 h-60 object-cover"
             />
             <Image
-              src={"https://dummyimage.com/600x96/000000/73769e"}
+              src={imageWajan}
+              alt="logo"
+              width={340}
+              height={240}
+              className="w-full rounded-xl shadow h-60 object-cover"
+            />
+          </div>
+          <div className="w-full">
+            <Image
+              src={"https://ik.imagekit.io/fathpurn/1738310211934_D_neDuDfC.jpg"}
               alt="logo"
               width={150}
               height={400}
-              className="w-full rounded-xl shadow min-h-24"
+              className="w-full rounded-xl shadow mb-3 h-96 object-cover"
+            />
+            <Image
+              src={"https://ik.imagekit.io/fathpurn/1738310930980_zXwOX2EjC.jpg"}
+              alt="logo"
+              width={150}
+              height={400}
+              className="w-full rounded-xl shadow h-24 object-cover"
             />
           </div>
         </div>
