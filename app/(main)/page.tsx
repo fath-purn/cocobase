@@ -122,14 +122,14 @@ const About = () => {
               src={"https://images.unsplash.com/photo-1537191072641-5e19cc173c6a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8Y29jb251dCUyMHRyZWV8ZW58MHx8MHx8fDA%3D"}
               alt="logo"
               width={400}
-              height={300}
+              height={400}
               className="w-full rounded-xl shadow mb-3 h-24 object-cover"
             />
             <Image
               src={"https://images.unsplash.com/photo-1564490292125-2e3c78a0ef44?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Y29jb251dCUyMHRyZWV8ZW58MHx8MHx8fDA%3D"}
               alt="logo"
               width={400}
-              height={380}
+              height={400}
               className="w-full rounded-xl shadow h-96 object-cover"
             />
           </div>
@@ -137,15 +137,15 @@ const About = () => {
             <Image
               src={imageNderes}
               alt="logo"
-              width={340}
-              height={240}
+              width={400}
+              height={400}
               className="w-full rounded-xl shadow mb-3 h-60 object-cover"
             />
             <Image
               src={imageWajan}
               alt="logo"
-              width={340}
-              height={240}
+              width={400}
+              height={400}
               className="w-full rounded-xl shadow h-60 object-cover"
             />
           </div>
@@ -153,14 +153,14 @@ const About = () => {
             <Image
               src={"https://ik.imagekit.io/fathpurn/1738310211934_D_neDuDfC.jpg"}
               alt="logo"
-              width={150}
+              width={400}
               height={400}
               className="w-full rounded-xl shadow mb-3 h-96 object-cover"
             />
             <Image
               src={"https://ik.imagekit.io/fathpurn/1738310930980_zXwOX2EjC.jpg"}
               alt="logo"
-              width={150}
+              width={400}
               height={400}
               className="w-full rounded-xl shadow h-24 object-cover"
             />
