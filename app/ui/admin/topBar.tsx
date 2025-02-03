@@ -20,7 +20,7 @@ const TopBar: React.FC = () => {
           alt="logo"
           width={100}
           height={100}
-          className="border border-gray-500 rounded-full object-cover aspect-square"
+          className="border border-gray-500 rounded-full object-cover aspect-square h-[44px] w-[44px]"
         />
         <div className="flex items-center">
           <p className="text-[#202224]">Admin Cocobase</p>
