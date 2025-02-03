@@ -18,8 +18,8 @@ const TopBar: React.FC = () => {
         <Image
           src={Profile}
           alt="logo"
-          width={44}
-          height={44}
+          width={100}
+          height={100}
           className="border border-gray-500 rounded-full object-cover aspect-square"
         />
         <div className="flex items-center">
