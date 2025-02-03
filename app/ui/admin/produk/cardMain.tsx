@@ -25,7 +25,7 @@ export default async function Card({
   const cocoblogList = data?.produk;
   const totalItems = Math.ceil(data.pagination.total_items / limit);
 
-  const nomorTujuan = 6285155040590;
+  const nomorTujuan = 6285727055150;
 
   return (
     <div>
