@@ -1,4 +1,4 @@
-import Profile from "../../../public/cblogo.png";
+import Profile from "@/public/home.png";
 import Image from "next/image";
 import Search from "@/app/ui/admin/search";
 import { Suspense } from "react";
