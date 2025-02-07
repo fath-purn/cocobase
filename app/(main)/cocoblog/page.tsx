@@ -1,26 +1,28 @@
 import { Suspense, lazy } from "react";
 import { SkeletonCard } from "@/app/ui/admin/skeleton/card";
 import { Footer, Chat } from "@/app/(main)/page";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Cocoblog",
+  title: "Cocoblog - Artikel & Inspirasi Gula Kelapa",
+  description: "Dapatkan informasi menarik, resep, dan tren terkini seputar gula kelapa.",
+  openGraph: {
+    title: "Cocoblog - Artikel & Inspirasi Gula Kelapa",
+    description: "Dapatkan informasi menarik, resep, dan tren terkini seputar gula kelapa.",
+    url: "https://cocobase-beta.vercel.app/cocoblog",
+    siteName: "Cocoblog",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Cocoblog - Artikel & Inspirasi Gula Kelapa",
+    description: "Dapatkan informasi menarik, resep, dan tren terkini seputar gula kelapa.",
+  },
 };
 
 const CardArtikel = lazy(() => import("@/app/ui/admin/cocoblog/cardMain"));
 
-export default async function Page(props: {
-  searchParams?: Promise<{
-    search?: string;
-    page?: string;
-    limit?: string;
-  }>;
-}) {
-  const searchParams = await props.searchParams;
-  const search = searchParams?.search || "";
-  const currentPage = Number(searchParams?.page) || 1;
-  const limit = Number(searchParams?.limit) || 12;
-
+export default function Page() {
   return (
     <main className="mt-10">
       <Chat />
@@ -33,17 +35,11 @@ export default async function Page(props: {
             Wawasan & Inspirasi tentang Gula Kelapa
           </h2>
           <p className="text-gray-600 mb-6 text-lg">
-            Dapatkan informasi menarik, resep, dan tren terkini seputar gula
-            kelapa.
+            Dapatkan informasi menarik, resep, dan tren terkini seputar gula kelapa.
           </p>
           {/* card atas */}
           <Suspense fallback={<SkeletonCard />}>
-            <CardArtikel
-              currentPage={currentPage}
-              search={search}
-              limit={limit}
-              all={true}
-            />
+            <CardArtikel currentPage={1} search="" limit={12} all={true} />
           </Suspense>
         </div>
       </section>

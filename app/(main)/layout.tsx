@@ -12,6 +12,27 @@ export const metadata: Metadata = {
   },
   description: 'Cocobase',
   metadataBase: new URL('https://cocobase-beta.vercel.app/'),
+  openGraph: {
+    title: 'Cocobase',
+    description: 'Cocobase adalah platform gula kelapa gula aren yang berkualitas',
+    url: 'https://cocobase-beta.vercel.app/',
+    siteName: 'Cocobase',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Cocobase',
+    description: 'Cocobase adalah platform gula kelapa gula aren yang berkualitas',
+    images: [
+      {
+        url: 'https://cocobase-beta.vercel.app/home.png',
+        width: 500,
+        height: 500,
+        alt: 'Cocobase',  
+      },
+    ],
+
+  },
 }
 
 export default function RootLayout({

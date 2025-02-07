@@ -7,9 +7,39 @@ import { mdiWhatsapp } from "@mdi/js";
 import imageHome from "@/public/home.png";
 import imageNderes from "@/public/nderes.png";
 import imageWajan from "@/public/wajan.png";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Cocobase",
+  description: "Cocobase adalah website yang menjual gula kelapa alami.",
+  openGraph: {
+    title: "Cocobase",
+    description: "Cocobase adalah website yang menjual gula kelapa alami.",
+    url: "https://cocobase-beta.vercel.app/",
+    siteName: "Cocobase",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Cocobase",
+    description: "Cocobase adalah website yang menjual gula kelapa alami.",
+    images: [
+      {
+        url: "https://cocobase-beta.vercel.app/home.png",
+        width: 500,
+        height: 500,
+        alt: "Cocobase",
+      },
+
+    ],
+  },
+};
+
+
 
 const CardArtikel = lazy(() => import("@/app/ui/admin/cocoblog/cardMain"));
 const CardShop = lazy(() => import("@/app/ui/admin/produk/cardMain"));
+
 
 export default async function Page(props: {
   searchParams?: Promise<{

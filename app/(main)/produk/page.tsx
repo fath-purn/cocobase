@@ -5,6 +5,19 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Produk",
+  description: "Dapatkan informasi menarik, resep, dan tren terkini seputar gula kelapa.",
+  openGraph: {
+    title: "Produk",
+    description: "Dapatkan informasi menarik, resep, dan tren terkini seputar gula kelapa.",
+    url: "https://cocobase-beta.vercel.app/produk",
+    siteName: "Produk",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Produk",
+    description: "Dapatkan informasi menarik, resep, dan tren terkini seputar gula kelapa.",    
+  },
 };
 
 const CardProduk = lazy(() => import("@/app/ui/admin/produk/cardMain"));
