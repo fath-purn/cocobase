@@ -1,4 +1,4 @@
-import Profile from "../../../public/cblogo.png";
+import Profile from "@/public/home.png";
 import Image from "next/image";
 import Search from "@/app/ui/admin/search";
 import { Suspense } from "react";
@@ -18,9 +18,9 @@ const TopBar: React.FC = () => {
         <Image
           src={Profile}
           alt="logo"
-          width={44}
-          height={44}
-          className="border border-gray-500 rounded-full object-cover aspect-square"
+          width={100}
+          height={100}
+          className="border border-gray-500 rounded-full object-cover aspect-square h-[44px] w-[44px]"
         />
         <div className="flex items-center">
           <p className="text-[#202224]">Admin Cocobase</p>

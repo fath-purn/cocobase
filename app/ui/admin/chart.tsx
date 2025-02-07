@@ -164,7 +164,7 @@ const LineChart = () => {
       },
       title: {
         display: true,
-        text: selectedMonth === 'all' ? 'Monthly Sales Data' : 'Weekly Sales Data',
+        text: selectedMonth === 'all' ? 'Monthly Sales Data || 1 KG Gula Aren' : 'Weekly Sales Data || 1 KG Gula Aren',
       },
     },
     scales: {
