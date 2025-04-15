@@ -3,7 +3,6 @@
 import {
   AtSymbolIcon,
   KeyIcon,
-  ExclamationCircleIcon,
 } from "@heroicons/react/24/outline";
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import { Button } from "@/app/ui/admin/button";
@@ -16,10 +15,10 @@ export default function LoginForm({ thisIsLogin }: { thisIsLogin?: boolean }) {
   const [code, action] = useActionState(thisIsLogin ? authenticate : register, undefined);
 
   return (
-    <form action={action} className="space-y-3">
-      <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
+    <form action={action} className="space-y-3 w-[75%]">
+      <div className="">
         <h1 className={`mb-3 text-2xl`}>
-          {thisIsLogin ? "Please log in to continue." : "Please Register to continue."}
+          {thisIsLogin ? "Login" : "Register"}
         </h1>
         <div className="w-full">
           <div>
@@ -72,7 +71,7 @@ function LoginButton({ thisIsLogin }: { thisIsLogin?: boolean }) {
   const { pending } = useFormStatus();
 
   return (
-    <Button className="mt-4 w-full" aria-disabled={pending}>
+    <Button className="mt-4 w-full bg-[#E37D2E]" aria-disabled={pending}>
       {thisIsLogin ? "Log In" : "Sign Up"} <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
     </Button>
   );

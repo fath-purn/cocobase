@@ -6,7 +6,6 @@ import Image from "next/image";
 import Icon from "@mdi/react";
 import {
   mdiDeleteOutline,
-  mdiArrowUpBoldBoxOutline,
   mdiExpandAll,
 } from "@mdi/js";
 import { useState, useEffect } from "react";

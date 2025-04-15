@@ -1,6 +1,6 @@
 "use client";
 import Icon from "@mdi/react";
-import { mdiImage, mdiTimerSand, mdiCounter } from "@mdi/js";
+import { mdiImage, mdiTimerSand, } from "@mdi/js";
 import { Button } from "../button";
 import { useFormStatus } from "react-dom";
 import { formSubmitHandlerFile } from "@/app/utils/actions";
